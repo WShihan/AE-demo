@@ -1,0 +1,12 @@
+C:\Users\acer\source\repos\GISDemo\bin\Debug\GISDemo.exe
+C:\Users\acer\source\repos\GISDemo\bin\Debug\GISDemo.pdb
+C:\Users\acer\source\repos\GISDemo\obj\Debug\GISDemo.csproj.AssemblyReference.cache
+C:\Users\acer\source\repos\GISDemo\obj\Debug\GISDemo.appMainUI.resources
+C:\Users\acer\source\repos\GISDemo\obj\Debug\GISDemo.Properties.Resources.resources
+C:\Users\acer\source\repos\GISDemo\obj\Debug\GISDemo.csproj.GenerateResource.cache
+C:\Users\acer\source\repos\GISDemo\obj\Debug\GISDemo.csproj.CoreCompileInputs.cache
+C:\Users\acer\source\repos\GISDemo\obj\Debug\GISDemo.exe
+C:\Users\acer\source\repos\GISDemo\obj\Debug\GISDemo.pdb
+C:\Users\acer\source\repos\GISDemo\bin\Debug\ESRI.ArcGIS.AxControls.dll
+C:\Users\acer\source\repos\GISDemo\bin\Debug\ESRI.ArcGIS.Version.dll
+C:\Users\acer\source\repos\GISDemo\obj\Debug\GISDemo.csproj.CopyComplete
