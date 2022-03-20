@@ -10,6 +10,7 @@ using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.DataSourcesFile;
 using System.IO;
+using ESRI.ArcGIS.Geometry;
 
 namespace GISDemo
 {
@@ -22,20 +23,31 @@ namespace GISDemo
 
         private void appMainUI_Load(object sender, EventArgs e)
         {
-            LoadData();
+            // 修改初始化大小
+            this.Width = 1440;
+            this.Height = 810;
+            //LoadData();
         }
         private void LoadData()
         {
             try
             {
-
+                #region 加载本地mxd
                 // 加载本地mxd
                 string mxdPath = "./data/test.mxd";
                 // 检查文件是否有效
-                if (this.MapControl.CheckMxFile(mxdPath))
-                {
-                    this.MapControl.LoadMxFile(mxdPath);
-                }
+                //if (this.MapControl.CheckMxFile(mxdPath))
+                //{
+                //    this.MapControl.LoadMxFile(mxdPath);
+                //}
+
+                IMapDocument curMapDocument = new MapDocument();
+                curMapDocument.Open(mxdPath, "");
+                MapControl.Map = curMapDocument.ActiveView.FocusMap;
+                MapControl.ActiveView.Refresh();
+
+
+                #endregion
                 //加载shapfile文件
                 #region 加载shapfile数据
                 // 一种通过地图控件的AddShapFile添加
@@ -64,39 +76,110 @@ namespace GISDemo
             }
         }
         // 点结构 
-        private struct CPoint
+        public struct CPoint
         {
             public string name;
             public double x;
             public double y;
         }
-        public void LoadFromCsv()
+        public List<CPoint> LoadFromCsv()
         {
-            Dictionary<List<string>, List<CPoint>> pointDic = new Dictionary<List<string>, List<CPoint>>();
-            List<CPoint> PointList = new List<CPoint>();
-            double[] xLIst = new double[1];
-            List<CPoint> pList = new List<CPoint>();
-            char[] charArray = new char[] { };
-            FileStream fs = new FileStream("./data/test.csv", FileMode.Open);
-            StreamReader sr = new StreamReader(fs, Encoding.GetEncoding("GBK"));
-            string line = sr.ReadLine();
-
-            string[] Fields = line.Split(',');
-
-            while ((line = sr.ReadLine()) != null)
+            try
             {
-                string[] rowArr = line.Split(',');
-                CPoint curPoint = new CPoint();
-                curPoint.name = rowArr[1];
-                curPoint.x = Convert.ToDouble(rowArr[2]);
-                curPoint.y = Convert.ToDouble(rowArr[3]);
-                PointList.Add(curPoint);
+                Dictionary<List<string>, List<CPoint>> pointDic = new Dictionary<List<string>, List<CPoint>>();
+                List<CPoint> PointList = new List<CPoint>();
+                double[] xLIst = new double[1];
+                char[] charArray = new char[] { };
+                FileStream fs = new FileStream("./data/test.csv", FileMode.Open);
+                StreamReader sr = new StreamReader(fs, Encoding.GetEncoding("GBK"));
+                string line = sr.ReadLine();
+
+                if (line != null)
+                {
+                    string[] Fields = line.Split(',');
+
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        string[] rowArr = line.Split(',');
+                        CPoint curPoint = new CPoint();
+                        curPoint.name = rowArr[1];
+                        curPoint.x = Convert.ToDouble(rowArr[2]);
+                        curPoint.y = Convert.ToDouble(rowArr[3]);
+                        PointList.Add(curPoint);
+                    }
+
+                }
+                else
+                {
+                    return null;
+                }
+                
+                foreach (var p in PointList)
+                {
+                    Console.WriteLine($"name:{p.name} x:{p.x} y:{p.y}");
+                }
+                sr.Close();
+                return PointList;
+            }
+            catch (Exception ex)
+            {
+                DialogResult dr = MessageBox.Show("出错：" + ex.ToString());
+                return null;
             }
         }
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-            LoadFromCsv();
+            List<CPoint> pointList = LoadFromCsv();
+            if (pointList != null)
+            {
+                IFeatureLayer featLayer = GenerateShpFromPoint(pointList);
+                if (featLayer != null)
+                {
+                    MapControl.Map.AddLayer(featLayer);
+                    MessageBox.Show("导入成功");
+                }
+                
+                
+            }
+        }
+        private IFeatureLayer GenerateShpFromPoint(List<CPoint> cPoint)
+        {
+            IWorkspaceFactory wsf = new ShapefileWorkspaceFactoryClass();
+            IFeatureWorkspace fws = (IFeatureWorkspace)wsf.OpenFromFile("./data", 0);
+            IFields pFields = new FieldsClass();
+            IField pField = new FieldClass();
+            IFieldsEdit pFieldsEdit = (IFieldsEdit)pFields;
+            IFieldEdit pFieldEdit = (IFieldEdit)pField;
+            pFieldEdit.Name_2 = "Shape";
+            pFieldEdit.Type_2 = esriFieldType.esriFieldTypeGeometry;
+            IGeometryDef pGeometryDef = new GeometryDefClass();
+            IGeometryDefEdit pGeoMetryDefEdit = (IGeometryDefEdit)pGeometryDef;
+            pGeoMetryDefEdit.GeometryType_2 = ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPoint;
+            // 定义坐标系
+            ISpatialReferenceFactory pSRF = new SpatialReferenceEnvironmentClass();
+            ISpatialReference pSpatialReference = pSRF.CreateGeographicCoordinateSystem((int)esriSRGeoCSType.esriSRGeoCS_WGS1984);
+            pGeoMetryDefEdit.SpatialReference_2 = pSpatialReference;
+            pFieldEdit.GeometryDef_2 = pGeometryDef;
+            pFieldsEdit.AddField(pField);
+            IFeatureClass pFeatureClass;
+            pFeatureClass = fws.CreateFeatureClass("点测试", pFields, null, null, esriFeatureType.esriFTSimple, "Shape", "");
+            IPoint pPoint = new PointClass();
+            for (int j = 0; j < cPoint.Count; j++)
+            {
+                pPoint.X = cPoint[j].x;
+                pPoint.Y = cPoint[j].y;
+                IFeature pFeature = pFeatureClass.CreateFeature();
+                pFeature.Shape = pPoint;
+                pFeature.Store();
+
+            }
+            IFeatureLayer pFeatureLayer = new FeatureLayerClass();
+            pFeatureLayer.Name = "点测试";
+            pFeatureLayer.FeatureClass = pFeatureClass;
+            return pFeatureLayer;
+
+
         }
 
 

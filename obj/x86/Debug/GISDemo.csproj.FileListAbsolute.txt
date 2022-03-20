@@ -53,3 +53,4 @@ C:\Users\acer\source\repos\GISDemo\bin\x86\Debug\ESRI.ArcGIS.NetworkAnalyst.xml
 C:\Users\acer\source\repos\GISDemo\bin\x86\Debug\ESRI.ArcGIS.Geoprocessing.xml
 C:\Users\acer\source\repos\GISDemo\bin\x86\Debug\ESRI.ArcGIS.DataSourcesNetCDF.xml
 C:\Users\acer\source\repos\GISDemo\bin\x86\Debug\ESRI.ArcGIS.GeoAnalyst.xml
+C:\Users\acer\source\repos\GISDemo\obj\x86\Debug\GISDemo.csproj.AssemblyReference.cache
