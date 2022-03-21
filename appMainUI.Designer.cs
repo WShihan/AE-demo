@@ -31,7 +31,9 @@ namespace GISDemo
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(appMainUI));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnTest = new System.Windows.Forms.Button();
+            this.panelFunc = new System.Windows.Forms.Panel();
+            this.btnLoadCSV = new System.Windows.Forms.Button();
+            this.btnSelectFeat = new System.Windows.Forms.Button();
             this.ToolbarControl = new ESRI.ArcGIS.Controls.AxToolbarControl();
             this.axLicenseControl1 = new ESRI.ArcGIS.Controls.AxLicenseControl();
             this.panelLeft = new System.Windows.Forms.Panel();
@@ -39,53 +41,90 @@ namespace GISDemo
             this.tbCoord = new System.Windows.Forms.TextBox();
             this.tbScale = new System.Windows.Forms.TextBox();
             this.TocControl = new ESRI.ArcGIS.Controls.AxTOCControl();
-            this.panelMap = new System.Windows.Forms.Panel();
             this.MapControl = new ESRI.ArcGIS.Controls.AxMapControl();
+            this.panelMap = new System.Windows.Forms.Panel();
+            this.tabMap = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.pageLayoutControl = new ESRI.ArcGIS.Controls.AxPageLayoutControl();
             this.panel1.SuspendLayout();
+            this.panelFunc.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ToolbarControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.axLicenseControl1)).BeginInit();
             this.panelLeft.SuspendLayout();
             this.panelTip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TocControl)).BeginInit();
-            this.panelMap.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MapControl)).BeginInit();
+            this.panelMap.SuspendLayout();
+            this.tabMap.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pageLayoutControl)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.btnTest);
+            this.panel1.Controls.Add(this.panelFunc);
             this.panel1.Controls.Add(this.ToolbarControl);
             this.panel1.Controls.Add(this.axLicenseControl1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(942, 37);
+            this.panel1.Size = new System.Drawing.Size(941, 38);
             this.panel1.TabIndex = 0;
             // 
-            // btnTest
+            // panelFunc
             // 
-            this.btnTest.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.panelFunc.Controls.Add(this.btnLoadCSV);
+            this.panelFunc.Controls.Add(this.btnSelectFeat);
+            this.panelFunc.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panelFunc.Location = new System.Drawing.Point(266, 0);
+            this.panelFunc.Margin = new System.Windows.Forms.Padding(4);
+            this.panelFunc.Name = "panelFunc";
+            this.panelFunc.Size = new System.Drawing.Size(675, 38);
+            this.panelFunc.TabIndex = 3;
+            // 
+            // btnLoadCSV
+            // 
+            this.btnLoadCSV.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnTest.Location = new System.Drawing.Point(523, 4);
-            this.btnTest.Name = "btnTest";
-            this.btnTest.Size = new System.Drawing.Size(66, 27);
-            this.btnTest.TabIndex = 2;
-            this.btnTest.Text = "Test";
-            this.btnTest.UseVisualStyleBackColor = true;
-            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
+            this.btnLoadCSV.Location = new System.Drawing.Point(84, 8);
+            this.btnLoadCSV.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnLoadCSV.Name = "btnLoadCSV";
+            this.btnLoadCSV.Size = new System.Drawing.Size(88, 28);
+            this.btnLoadCSV.TabIndex = 3;
+            this.btnLoadCSV.Text = "加载CSV";
+            this.btnLoadCSV.UseVisualStyleBackColor = true;
+            // 
+            // btnSelectFeat
+            // 
+            this.btnSelectFeat.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSelectFeat.Location = new System.Drawing.Point(3, 6);
+            this.btnSelectFeat.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnSelectFeat.Name = "btnSelectFeat";
+            this.btnSelectFeat.Size = new System.Drawing.Size(76, 28);
+            this.btnSelectFeat.TabIndex = 2;
+            this.btnSelectFeat.Text = "选择要素";
+            this.btnSelectFeat.UseVisualStyleBackColor = true;
+            this.btnSelectFeat.Click += new System.EventHandler(this.btnSelect_Click);
             // 
             // ToolbarControl
             // 
-            this.ToolbarControl.Location = new System.Drawing.Point(13, 4);
+            this.ToolbarControl.Dock = System.Windows.Forms.DockStyle.Left;
+            this.ToolbarControl.Location = new System.Drawing.Point(0, 0);
+            this.ToolbarControl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ToolbarControl.Name = "ToolbarControl";
             this.ToolbarControl.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("ToolbarControl.OcxState")));
-            this.ToolbarControl.Size = new System.Drawing.Size(477, 28);
+            this.ToolbarControl.Size = new System.Drawing.Size(248, 28);
             this.ToolbarControl.TabIndex = 1;
             // 
             // axLicenseControl1
             // 
             this.axLicenseControl1.Enabled = true;
             this.axLicenseControl1.Location = new System.Drawing.Point(900, 8);
+            this.axLicenseControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.axLicenseControl1.Name = "axLicenseControl1";
             this.axLicenseControl1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axLicenseControl1.OcxState")));
             this.axLicenseControl1.Size = new System.Drawing.Size(32, 32);
@@ -98,10 +137,11 @@ namespace GISDemo
             this.panelLeft.AutoSize = true;
             this.panelLeft.Controls.Add(this.panelTip);
             this.panelLeft.Controls.Add(this.TocControl);
-            this.panelLeft.Location = new System.Drawing.Point(0, 37);
+            this.panelLeft.Location = new System.Drawing.Point(0, 38);
+            this.panelLeft.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panelLeft.Name = "panelLeft";
             this.panelLeft.Padding = new System.Windows.Forms.Padding(5, 5, 1, 5);
-            this.panelLeft.Size = new System.Drawing.Size(206, 456);
+            this.panelLeft.Size = new System.Drawing.Size(219, 456);
             this.panelLeft.TabIndex = 1;
             // 
             // panelTip
@@ -110,13 +150,15 @@ namespace GISDemo
             this.panelTip.Controls.Add(this.tbScale);
             this.panelTip.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelTip.Location = new System.Drawing.Point(5, 417);
+            this.panelTip.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panelTip.Name = "panelTip";
-            this.panelTip.Size = new System.Drawing.Size(200, 34);
+            this.panelTip.Size = new System.Drawing.Size(213, 34);
             this.panelTip.TabIndex = 3;
             // 
             // tbCoord
             // 
             this.tbCoord.Location = new System.Drawing.Point(83, 6);
+            this.tbCoord.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbCoord.Name = "tbCoord";
             this.tbCoord.Size = new System.Drawing.Size(112, 25);
             this.tbCoord.TabIndex = 2;
@@ -124,7 +166,8 @@ namespace GISDemo
             // 
             // tbScale
             // 
-            this.tbScale.Location = new System.Drawing.Point(2, 6);
+            this.tbScale.Location = new System.Drawing.Point(3, 6);
+            this.tbScale.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbScale.Name = "tbScale";
             this.tbScale.Size = new System.Drawing.Size(75, 25);
             this.tbScale.TabIndex = 1;
@@ -134,54 +177,111 @@ namespace GISDemo
             // 
             this.TocControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TocControl.Location = new System.Drawing.Point(5, 5);
+            this.TocControl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TocControl.Name = "TocControl";
             this.TocControl.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("TocControl.OcxState")));
-            this.TocControl.Size = new System.Drawing.Size(200, 446);
+            this.TocControl.Size = new System.Drawing.Size(213, 446);
             this.TocControl.TabIndex = 0;
+            // 
+            // MapControl
+            // 
+            this.MapControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MapControl.Location = new System.Drawing.Point(4, 4);
+            this.MapControl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.MapControl.Name = "MapControl";
+            this.MapControl.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("MapControl.OcxState")));
+            this.MapControl.Size = new System.Drawing.Size(696, 407);
+            this.MapControl.TabIndex = 0;
+            this.MapControl.OnMouseDown += new ESRI.ArcGIS.Controls.IMapControlEvents2_Ax_OnMouseDownEventHandler(this.MapControl_OnMouseDown);
+            this.MapControl.OnMouseUp += new ESRI.ArcGIS.Controls.IMapControlEvents2_Ax_OnMouseUpEventHandler(this.MapControl_OnMouseUp);
+            this.MapControl.OnMouseMove += new ESRI.ArcGIS.Controls.IMapControlEvents2_Ax_OnMouseMoveEventHandler(this.MapControl_OnMouseMove);
             // 
             // panelMap
             // 
             this.panelMap.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelMap.Controls.Add(this.MapControl);
-            this.panelMap.Location = new System.Drawing.Point(212, 37);
+            this.panelMap.Controls.Add(this.tabMap);
+            this.panelMap.Location = new System.Drawing.Point(225, 38);
+            this.panelMap.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panelMap.Name = "panelMap";
-            this.panelMap.Padding = new System.Windows.Forms.Padding(0, 6, 6, 6);
-            this.panelMap.Size = new System.Drawing.Size(730, 456);
+            this.panelMap.Padding = new System.Windows.Forms.Padding(0, 6, 5, 6);
+            this.panelMap.Size = new System.Drawing.Size(717, 456);
             this.panelMap.TabIndex = 2;
             // 
-            // MapControl
+            // tabMap
             // 
-            this.MapControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MapControl.Location = new System.Drawing.Point(0, 6);
-            this.MapControl.Name = "MapControl";
-            this.MapControl.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("MapControl.OcxState")));
-            this.MapControl.Size = new System.Drawing.Size(724, 444);
-            this.MapControl.TabIndex = 0;
-            this.MapControl.OnMouseMove += new ESRI.ArcGIS.Controls.IMapControlEvents2_Ax_OnMouseMoveEventHandler(this.MapControl_OnMouseMove);
+            this.tabMap.Controls.Add(this.tabPage1);
+            this.tabMap.Controls.Add(this.tabPage2);
+            this.tabMap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabMap.Location = new System.Drawing.Point(0, 6);
+            this.tabMap.Margin = new System.Windows.Forms.Padding(4);
+            this.tabMap.Name = "tabMap";
+            this.tabMap.SelectedIndex = 0;
+            this.tabMap.Size = new System.Drawing.Size(712, 444);
+            this.tabMap.TabIndex = 1;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.MapControl);
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(4);
+            this.tabPage1.Size = new System.Drawing.Size(704, 415);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.pageLayoutControl);
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
+            this.tabPage2.Size = new System.Drawing.Size(704, 415);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // pageLayoutControl
+            // 
+            this.pageLayoutControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pageLayoutControl.Location = new System.Drawing.Point(4, 4);
+            this.pageLayoutControl.Margin = new System.Windows.Forms.Padding(4);
+            this.pageLayoutControl.Name = "pageLayoutControl";
+            this.pageLayoutControl.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("pageLayoutControl.OcxState")));
+            this.pageLayoutControl.Size = new System.Drawing.Size(696, 407);
+            this.pageLayoutControl.TabIndex = 0;
             // 
             // appMainUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(942, 493);
+            this.ClientSize = new System.Drawing.Size(941, 492);
             this.Controls.Add(this.panelMap);
             this.Controls.Add(this.panelLeft);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "appMainUI";
-            this.Text = "MiniGIS";
+            this.Text = "Demo";
             this.Load += new System.EventHandler(this.appMainUI_Load);
             this.panel1.ResumeLayout(false);
+            this.panelFunc.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ToolbarControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.axLicenseControl1)).EndInit();
             this.panelLeft.ResumeLayout(false);
             this.panelTip.ResumeLayout(false);
             this.panelTip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TocControl)).EndInit();
-            this.panelMap.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.MapControl)).EndInit();
+            this.panelMap.ResumeLayout(false);
+            this.tabMap.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pageLayoutControl)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -191,15 +291,21 @@ namespace GISDemo
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panelLeft;
-        private System.Windows.Forms.Panel panelMap;
         private ESRI.ArcGIS.Controls.AxLicenseControl axLicenseControl1;
         private ESRI.ArcGIS.Controls.AxToolbarControl ToolbarControl;
-        private ESRI.ArcGIS.Controls.AxMapControl MapControl;
         private ESRI.ArcGIS.Controls.AxTOCControl TocControl;
         private System.Windows.Forms.TextBox tbCoord;
         private System.Windows.Forms.TextBox tbScale;
         private System.Windows.Forms.Panel panelTip;
-        private System.Windows.Forms.Button btnTest;
+        private System.Windows.Forms.Button btnSelectFeat;
+        private System.Windows.Forms.Panel panelFunc;
+        private System.Windows.Forms.Button btnLoadCSV;
+        private ESRI.ArcGIS.Controls.AxMapControl MapControl;
+        private System.Windows.Forms.Panel panelMap;
+        private System.Windows.Forms.TabControl tabMap;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private ESRI.ArcGIS.Controls.AxPageLayoutControl pageLayoutControl;
     }
 }
 

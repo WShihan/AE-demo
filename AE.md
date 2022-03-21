@@ -226,5 +226,175 @@ private IFeatureLayer GenerateShpFromPoint(List<CPoint> cPoint)
 
 最后使用MapControl的Map对象的AddLayer方法添加到地图里。
 
+## 1.5 保存地图文档
+
+使用 ==IMapDocument== 接口，读取已打开的地图文档并替换IMapDocument实例对象的内容。
+
+```C#
+// 保持地图文档
+string mxdFileName = MapControl.DocumentFilename;
+IMapDocument pMapDocument = new MapDocumentClass();
+if (mxdFileName != null && MapControl.CheckMxFile(mxdFileName))
+{
+    MessageBox.Show("地图文档为：" + mxdFileName);
+}
+else
+{
+    pMapDocument.New(@"C:\Users\Administrator\Desktop\TempData\Save.mxd");
+    pMapDocument.ReplaceContents(MapControl.Map as IMxdContents);
+    pMapDocument.Save(pMapDocument.UsesRelativePaths, true);
+    pMapDocument.Close();
+}
+
+// 另存地图文档
+//IMapDocument pMapdocument = new MapDocumentClass();
+//pMapdocument.New(@"C:\Users\Administrator\Desktop\TempData\SaveAs.mxd");
+//pMapdocument.ReplaceContents(MapControl.Map as IMxdContents);
+//pMapdocument.Save(true, true);
+//pMapdocument.Close();
+```
+
+
+
+## 1.6 地图浏览相关
+
+==放大缩小== 
+
+通过改变MapControl当前视图的Extent属性来实现，涉及Envelope。
+
+==包络线==
+
+![image-20220321094719172](C:\Users\Administrator\Desktop\md_assetes\image-20220321094719172.png)
+
+```C#
+// 固定比例放大
+//IEnvelope pEnvelope;
+//pEnvelope = MapControl.Extent;
+//pEnvelope.Expand(ratioX, ratioY, true);// 小数放大，整数缩小
+//MapControl.Extent = pEnvelope;
+//MapControl.ActiveView.Refresh();
+
+//  固定比例缩小， 以当前视图中心为缩放中心
+IActiveView pActiveView = MapControl.ActiveView;
+IPoint centerPoint = new PointClass();
+centerPoint.PutCoords((pActiveView.Extent.XMin + pActiveView.Extent.XMax) / 2, (pActiveView.Extent.YMin = pActiveView.Extent.YMax) / 2);
+IEnvelope pEnvelope = pActiveView.Extent;
+pEnvelope.Expand(1.5, 1.5, true);
+pActiveView.Extent = pEnvelope;
+pActiveView.Refresh();
+```
+
+
+
+==拉框放大/缩小==
+
+```C#
+IEnvelope pEnvelop;
+pEnvelop = MapControl.TrackRectangle();
+IActiveView pActiiveView = MapControl.ActiveView;
+// 拉框放大
+//if (pEnvelop == null && pEnvelop.IsEmpty || pEnvelop.Height == 0 || pEnvelop.Width == 0)
+//{
+//    return;
+//}
+//else
+//{
+//    pActiiveView.Extent = pEnvelop;
+//    pActiiveView.Refresh();
+//}
+
+// 缩小
+double dWidth = pActiiveView.Extent.Width * pActiiveView.Extent.Width / pEnvelop.Width;
+double dHeight = pActiiveView.Extent.Height * pActiiveView.Extent.Height / pEnvelop.Height;
+double dXmin = pActiiveView.Extent.XMin - ((pEnvelop.XMin - pActiiveView.Extent.XMin) * pActiiveView.Extent.Width / pEnvelop.Width);
+double dYmin = pActiiveView.Extent.YMin - ((pEnvelop.YMin - pActiiveView.Extent.YMin) * pActiiveView.Extent.Height / pEnvelop.Height);
+double dXmax = dXmin + dWidth;
+double dYmax = dYmin + dHeight;
+pEnvelop.PutCoords(dXmin, dYmin, dXmax, dYmax);
+pActiiveView.Extent = pEnvelop;
+pActiiveView.Refresh();
+```
+
+
+
+==全幅显示== 
+
+```C#
+mapControl.extent = mapControl.FullExtent;
+```
+
+
+
+## 1.7 控件量测（通过鼠标）
+
+省略
+
+
+
+
+
+
+
+
+
+## 1.8 要素选择
+
+==IMap== 接口的SelectByShape方法可以查询到与输入的形状相交的图层中的所有IFeatureLayer接口类型的Feature，值得注意的是：==该FeatureLayer==图层的Selectable属性为true。
+
+```C#
+
+// 矩形框选择要素
+IActiveView pactiveView = MapControl.ActiveView;
+IEnvelope pEnv = MapControl.TrackRectangle();
+IGeometry pGeom = pEnv as IGeometry;
+if (pEnv.IsEmpty)
+{
+    tagRECT r;
+    r.left = e.x - 5;
+    r.top = e.y - 5;
+    r.right = e.x + 5;
+    r.bottom = e.y + 5;
+    pactiveView.ScreenDisplay.DisplayTransformation.TransformRect(pEnv, ref r, 4);
+    pEnv.SpatialReference = pactiveView.FocusMap.SpatialReference;
+
+}
+pGeom = pEnv as IGeometry;
+MapControl.Map.SelectByShape(pGeom, null, false);
+MapControl.Refresh(esriViewDrawPhase.esriViewGeoSelection, null, null);
+
+```
+
+
+
+==清除选择==
+
+清空选择的元素
+
+```C#
+IActiveView pActiveView = MapControl.ActiveView;
+pActiveView.FocusMap.ClearSelection();
+pActiveView.PartialRefresh(
+    esriViewDrawPhase.esriViewGeoSelection, null, pActiveView.Extent
+);
+```
+
+
+
+## 1.9 地图导出
+
+省略
+
+
+
+## 1.10 视图同步
+
+
+
+
+
+
+
+ 
+
 
 
