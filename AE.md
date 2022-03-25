@@ -339,6 +339,8 @@ mapControl.extent = mapControl.FullExtent;
 
 ## 1.8 要素选择
 
+==拉框选择==
+
 ==IMap== 接口的SelectByShape方法可以查询到与输入的形状相交的图层中的所有IFeatureLayer接口类型的Feature，值得注意的是：==该FeatureLayer==图层的Selectable属性为true。
 
 ```C#
@@ -392,9 +394,405 @@ pActiveView.PartialRefresh(
 
 
 
+## 1.11 TocControl右键
 
 
- 
+
+# 2. 查询统计
+
+## 2.1 属性查询
+
+
+
+## 2.2 空间查询
+
+
+
+
+
+## 2.3 图形查询
+
+
+
+
+
+***
+
+# 3. 空间编辑
+
+开始编辑
+
+> 1.创建IEngineEditor对象，设置相关属性
+
+==涉及类及接口== 
+
+```mermaid
+classDiagram
+IMap --> IENgineEditor
+IWorkSpace --> IENgineEditor
+IEngineEditTask --o IENgineEditor
+IEngineEditorLyaers --o IENgineEditor
+
+class IENgineEditor{
+    +Editstate
+    +EditWorkSpace
+    +CurrentTask
+    +EditSessionMod
+    +StartEditing()
+    SetTargetLayer()
+}
+```
+
+```C#
+curEngineEditor = new EngineEditorClass();
+IMap curMap = MapControl.Map as IMap;
+IFeatureLayer curlayer = MapControl.get_Layer(0) as IFeatureLayer;
+IDataset curDataSet = curlayer.FeatureClass as IDataset;
+IWorkspace cws = curDataSet.Workspace;
+curEngineEditor.EditSessionMode = esriEngineEditSessionMode.esriEngineEditSessionModeNonVersioned;
+curEditTask = curEngineEditor as IEngineEditTask;
+curEditTask = curEngineEditor.GetTaskByUniqueName("ControlToolsEditingCreateNewFeatureTask");
+curEngineEditor.CurrentTask = curEditTask;
+curEngineEditor.EnableUndoRedo(true);
+curEngineEditor.StartEditing(cws, curMap);
+// 设置编辑图层
+curEngineEditLayer = curEngineEditor as IEngineEditLayers;
+curEngineEditLayer.SetTargetLayer(curlayer, 0);
+```
+
+
+
+### 3.1 要素选择
+
+一般过程
+
+> 1. 获取图层要素类（FeatureClass）（包含所有要素）
+>
+> 2. 获取当前编辑图层及鼠标坐标点ptScreenDisplay.DisplayTransformation.ToMapPoint(x, y)
+>
+> 3. 计算像素坐标系地理坐标系之间换算关系dlength[ 点击查看](#坐标系转换)
+>
+> 4. 创建空间过滤对象SpatialFiler，分局图层类型设置过滤条件属性==SpatialRef==属性（不同==图层类型== 选择方式不同，点—包含关系，即落在缓冲区范围内的点被选中；面—相交关系，即选中和缓冲区有重叠的面；线—交叉关系，即选中和缓冲区有交叉的线段）；
+>
+>    由pt的几何对象创建拓扑对象pTopo
+>
+> 5. pTopo.Buffer(dlength)生成缓冲区并将几何对象赋给SpatialFilter，将 SpatialFilter --> IQueryFilter对象；执行要素类的Search（IQueryFilter, false）查找，获得一个要素游标
+>
+> 6. 执行要素游标对象的NextFeature方法获取要素，IMap.SelectFeature(ILayer, feature) 添加到地图
+
+
+
+主要代码：
+
+```C#
+IFeatureLayer pFeatLayer = MapControl.get_Layer(0) as IFeatureLayer;
+IFeatureClass pFeatclass = pFeatLayer.FeatureClass;
+IPoint pt = MapControl.ActiveView.ScreenDisplay.DisplayTransformation.ToMapPoint(x, y);
+double dLength = MapManager.Pixel2MapUnits(MapControl.ActiveView, 20);
+IGeometry geomP = pt as IGeometry;
+ISpatialFilter pSpaFil = new SpatialFilter();
+ITopologicalOperator pTop = geomP as ITopologicalOperator;
+pSpaFil.SpatialRel = esriSpatialRelEnum.esriSpatialRelContains;
+
+IGeometry pBuffer = null;
+pBuffer = pTop.Buffer(dLength);
+geomP = pBuffer.Envelope as IGeometry;
+pSpaFil.Geometry = geomP;
+pSpaFil.GeometryField = pFeatclass.ShapeFieldName;
+IQueryFilter pQueFil = pSpaFil as IQueryFilter;
+IFeatureCursor featCur = pFeatclass.Search(pQueFil, false);
+IFeature pFeat = featCur.NextFeature();
+if (pFeat != null)
+{
+    MapControl.Map.SelectFeature(pFeatLayer as ILayer, pFeat);
+    MapControl.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeoSelection, null, null);
+}
+else
+{
+    MessageBox.Show("查询为空");
+}
+```
+
+
+
+<a id=坐标系转换> 计算像素坐标系和地理坐标系之间转换</a>
+
+```C#
+// 坐标处理
+public static double Pixel2MapUnits(IActiveView activeView, double pixelUnits)
+{
+    int pixelExtent = activeView.ScreenDisplay.DisplayTransformation.get_DeviceFrame().right -
+        activeView.ScreenDisplay.DisplayTransformation.get_DeviceFrame().left;
+    double realWorldDisplayExtent = activeView.ScreenDisplay.DisplayTransformation.VisibleBounds.Width;
+    double sizeOfPixel = realWorldDisplayExtent / pixelExtent;
+    return pixelUnits * sizeOfPixel;
+}
+```
+
+
+
+***
+
+
+
+## 3.2 要素移动
+
+移动涉及三个事件：
+
+> 1. <KBD>MouseDown</KBD> 获取待移动的所有元素，创建<u>移动对象</u>，以及移动初始点位置
+> 2. <KBD>mouseMove</KBD> 获取鼠标运动过程中的点位置，<u>移动对象</u>移动到该点，在地图上显示移动过程
+> 3. <kbd>MouseUp</kbd> 获取终点，计算移动距离后开始移动元素
+
+==获取元素==
+
+> 1.获取目标编辑图层、该图层的选择要素
+>
+> 2.创建移动反馈对象（MoveGeoFeedback）
+>
+> 3.遍历选择要素集，将其添加到移动反馈对象
+
+实例代码：
+
+```C#
+IFeatureLayer tFeatLayer = cEngineEditLayers.TargetLayer;
+fromtPoint = m_activeView.ScreenDisplay.DisplayTransformation.ToMapPoint(x, y);
+if (pFeatLyr == null) return;
+//获取要移动几何对象
+IFeatureCursor pFeatCur = MapManager.GetSelectedFeatures(pFeatLyr);
+if (pFeatCur == null)
+{
+    MessageBox.Show("请选择要移动要素！", "提示",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+    return;
+}
+IFeature pFeature = pFeatCur.NextFeature();
+//当移动的对象为空时，首先进行对象实例化
+if (m_moveGeoFeedBack == null)
+    m_moveGeoFeedBack = new MoveGeometryFeedbackClass();
+m_moveGeoFeedBack.Display = m_activeView.ScreenDisplay;
+while (pFeature != null)
+{
+    m_moveGeoFeedBack.AddGeometry(pFeature.Shape);
+    pFeature = pFeatCur.NextFeature();
+}
+//添加起始点
+m_moveGeoFeedBack.Start(fromtPoint);
+```
+
+
+
+其中的==GetSelectedFeatures== 方法
+
+> 1.获取目标要素图层
+>
+> 2.将要素图层 --> 要素选择对象
+>
+> 3.获取要素选择对象的选择集（SelectionSet）属性
+>
+> 4.通过选择集的Search方法获取要素游标（FeatureCursor）对象
+
+```C#
+public static IFeatureCursor GetSelectedFeatures(IFeatureLayer featureLayer)
+{
+    ICursor pCursor = null;
+    IFeatureCursor pFeatCur = null;
+    if (featureLayer == null) return null;
+    IFeatureSelection featSelection = featureLayer as IFeatureSelection;
+    ISelectionSet pSelSet = featSelection.SelectionSet;
+    if (pSelSet.Count == 0) return null;
+    pSelSet.Search(null, false, out pCursor);
+    pFeatCur = pCursor as IFeatureCursor;
+    return pFeatCur;
+}
+```
+
+
+
+***
+
+ ==计算距离== 
+
+> 输入起点、终点坐标后输出横向坐标移动距离
+
+```C#
+public static bool CalDistance(IPoint lastpoint, IPoint firstpoint, out double deltaX, out double deltaY)
+{
+    deltaX = 0; deltaY = 0;
+    if (lastpoint == null || firstpoint == null)
+        return false;
+    deltaX = lastpoint.X - firstpoint.X;
+    deltaY = lastpoint.Y - firstpoint.Y;
+    return true;
+}
+```
+
+
+
+***
+
+==移动元素==
+
+> 1.开启EngineEditor 编辑流
+>
+> 2.获移动的图层，待移动的选择元素游标
+>
+> 3.遍历游标，移动元素停止编辑流
+
+```C#
+private void MoveFeatures(IPoint lastpoint, IPoint firstpoint)
+{
+    m_EngineEditor.StartOperation();
+    IFeatureLayer pFeatLyr = m_EngineEditLayers.TargetLayer;
+    IFeatureCursor pFeatCur = MapManager.GetSelectedFeatures(pFeatLyr);
+    IFeature pFeature = pFeatCur.NextFeature();
+    while (pFeature != null)
+    {
+        MoveFeature(pFeature, lastpoint, firstpoint);
+        pFeature = pFeatCur.NextFeature();
+    }
+    m_EngineEditor.StopOperation("MoveTool"); System.Runtime.InteropServices.Marshal.ReleaseComObject(pFeatCur); m_activeView.PartialRefresh(esriViewDrawPhase.esriViewGeoSelection | esriViewDrawPhase.esriViewGeography, null, null);
+}
+```
+
+
+
+==移动操作（MoveFeature）==
+
+```mermaid
+graph TD
+获取移动距离 --> b[获取要素类]
+b --> c[要素类转地理数据集]
+c --> d[获取要素几何]
+d --> e[要素几何转2D转换对象]
+e --> f[2D转换对象开始移动到指定位置]
+f --> g[要素几何投影为地理数据集的空间参考]
+g --> h[将要素的形状设置为几何对象]
+h --> End(保存)
+
+```
+
+
+
+```C#
+private void MoveFeature(IFeature pFeature, IPoint lastpoint,IPoint firstpoint)
+{
+    double deltax; double deltay;
+    IGeoDataset pGeoDataSet;
+    ITransform2D transform;
+    IGeometry pGeometry;
+    IFeatureClass pClass = pFeature.Class as IFeatureClass;
+    pGeoDataSet = pClass as IGeoDataset;
+
+    pGeometry = pFeature.Shape;
+    if (pGeometry.GeometryType == esriGeometryType.esriGeometryMultiPatch
+        || pGeometry.GeometryType == esriGeometryType.esriGeometryPoint
+        || pGeometry.GeometryType == esriGeometryType.esriGeometryPolyline
+        || pGeometry.GeometryType == esriGeometryType.esriGeometryPolygon)
+    {
+        pGeometry = pFeature.Shape;
+        transform = pGeometry as ITransform2D;
+        if (!MapManager.CalDistance(lastpoint, firstpoint, out deltax, out deltay))
+        {
+            MessageBox.Show("计算距离出现错误", "提示",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+            return;
+        }
+        transform.Move(deltax, deltay);
+        pGeometry = (IGeometry)transform;
+        if (pGeoDataSet.SpatialReference != null)
+        {
+            pGeometry.Project(pGeoDataSet.SpatialReference);
+        }
+        pFeature.Shape = pGeometry;
+        // 若要素存在Z值或M值，移动之后需要修改为对应数值
+        //pFeature.Shape = MapManager.ModifyGeomtryZMValue(pClass, pGeometry);
+        pFeature.Store();
+    }
+}
+```
+
+
+
+其中==ModifyGeomtryZMValue== 方法：
+
+```C#
+public static IGeometry ModifyGeomtryZMValue(IObjectClass featureClass, IGeometry modifiedGeo)
+{
+    IFeatureClass trgFtCls = featureClass as IFeatureClass;
+    if (trgFtCls == null) return null;
+    string shapeFieldName = trgFtCls.ShapeFieldName;
+    IFields fields = trgFtCls.Fields;
+    int geometryIndex = fields.FindField(shapeFieldName);
+    IField field = fields.get_Field(geometryIndex);
+    IGeometryDef pGeometryDef = field.GeometryDef;
+    IPointCollection pPointCollection = modifiedGeo as IPointCollection;
+    if (pGeometryDef.HasZ)  //属性中有Z值
+    {
+        IZAware pZAware = modifiedGeo as IZAware;
+        pZAware.ZAware = true;//可以使用Z值
+        IZ iz1 = modifiedGeo as IZ;
+        iz1.SetConstantZ(0);//将Z值设置为0
+    }
+    else
+    {
+        IZAware pZAware = modifiedGeo as IZAware;
+        pZAware.ZAware = false;
+    }
+    if (pGeometryDef.HasM)//属性中有M值
+    {
+        IMAware pMAware = modifiedGeo as IMAware;
+        pMAware.MAware = true;//可以使用M值
+    }
+    else
+    {
+        IMAware pMAware = modifiedGeo as IMAware;
+        pMAware.MAware = false;
+    }
+    return modifiedGeo;
+}
+```
+
+
+
+
+
+***
+
+
+
+## 3.3 添加元素
+
+步骤：
+
+> 1.判断当前图层几何类型为点/线/面
+>
+> 2.针对不同几何类型创建<u>新几何反馈对象</u> 
+>
+> 3.针对不同的要素类型，创建流程不同：
+>
+> > 点：<kbd>鼠标点击</kbd> 直接创建新点元素
+> >
+> > 线：<kbd>鼠标点击</kbd> 捕捉移动事件，获取后续点，双击完成新线元素绘制，双击时创建
+> >
+> > 面：同线
+> >
+> > 多点：同线
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -13,6 +13,7 @@ using System.IO;
 using ESRI.ArcGIS.Geometry;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.esriSystem;
+using ESRI.ArcGIS.Controls;
 
 namespace GISDemo
 {
@@ -20,8 +21,21 @@ namespace GISDemo
     {
         // 要素选择模式
         private bool _SelectFeatMod = false;
+
+        private bool _selectByPoint = false;
         // 右键浏览模式
         private bool _isPan = true;
+        // 点选要素模式
+        private bool _pointSelectMod = false;
+        #region 编辑模式相关变量
+        // 编辑模式
+        private bool _editMod = false;
+        // 编辑图层
+        private IEngineEditLayers curEngineEditLayer;
+        // 编辑任务
+        private IEngineEditTask curEditorTask;
+        IEngineEditor curEngineEditor;
+        #endregion
         public appMainUI()
         {
             InitializeComponent();
@@ -32,6 +46,7 @@ namespace GISDemo
             // 修改初始化大小
             this.Width = 960;
             this.Height = 540;
+            
             LoadData();
         }
         /// <summary>
@@ -43,7 +58,7 @@ namespace GISDemo
             {
                 #region 加载本地mxd
                 // 加载本地mxd
-                string mxdPath = @"./data/test.csv";
+                string mxdPath = @"C:\Users\Administrator\Desktop\TempData\北京.mxd";
                 // 检查文件是否有效
                 //if (this.MapControl.CheckMxFile(mxdPath))
                 //{
@@ -60,10 +75,10 @@ namespace GISDemo
                 //加载shapfile文件
                 #region 加载shapfile数据
                 // 一种通过地图控件的AddShapFile添加
-                this.MapControl.AddShapeFile(@"./data", "testData");
+                this.MapControl.AddShapeFile(@"./data", "testPoint");
                 // 另一种通过IWorkSpace添加
 
-                // 第二种通过创建工作控件，数据集，图层，要素等添加
+                // 第二种通过创建工作空间，数据集，图层，要素等添加
                 //IWorkspaceFactory curWorkSpaceF;
                 //IFeatureWorkspace curFeatWorkSpace;
                 //IFeatureLayer curfeatureLayer;
@@ -106,7 +121,7 @@ namespace GISDemo
                 List<CPoint> PointList = new List<CPoint>();
                 double[] xLIst = new double[1];
                 char[] charArray = new char[] { };
-                System.IO.FileStream fs = new System.IO.FileStream(@"./data/test.csv", FileMode.Open);
+                System.IO.FileStream fs = new System.IO.FileStream(@"C:\Users\Administrator\Desktop\AE-demo-master\bin\x86\Debug\data\test.csv", FileMode.Open);
                 StreamReader sr = new StreamReader(fs, Encoding.GetEncoding("GBK"));
                 string line = sr.ReadLine();
 
@@ -153,7 +168,7 @@ namespace GISDemo
         private IFeatureLayer GenerateShpFromPoint(List<CPoint> cPoint)
         {
             IWorkspaceFactory wsf = new ShapefileWorkspaceFactoryClass();
-            IFeatureWorkspace fws = (IFeatureWorkspace)wsf.OpenFromFile(@"./data", 0);
+            IFeatureWorkspace fws = (IFeatureWorkspace)wsf.OpenFromFile(@"C:\Users\Administrator\Desktop\TempData\", 0);
             IFields pFields = new FieldsClass();
             IField pField = new FieldClass();
             IFieldsEdit pFieldsEdit = (IFieldsEdit)pFields;
@@ -185,16 +200,7 @@ namespace GISDemo
             pFeatureLayer.FeatureClass = pFeatureClass;
             return pFeatureLayer;
         }
-        private void MapControl_OnMouseMove(object sender, ESRI.ArcGIS.Controls.IMapControlEvents2_OnMouseMoveEvent e)
-        {
-            #region 获取鼠标坐标和地图尺寸单位
-            string coordinate = string.Format(
-                "{0},{1}", e.mapX.ToString("#######.##"),
-                e.mapY.ToString("#######.##"));
-            string unite = MapControl.MapUnits.ToString().Substring(4);
-            tbCoord.Text = coordinate;
-            #endregion
-        }
+
         /// <summary>
         /// 保存地图文档
         /// </summary>
@@ -279,23 +285,26 @@ namespace GISDemo
         private void btnSelect_Click(object sender, EventArgs e)
         {
             
-            if (_SelectFeatMod == false)
+            if (_SelectFeatMod == false && _pointSelectMod == false)
             {
-                _SelectFeatMod = true;
+                //_pointSelectMod = true;
+                _SelectFeatMod = true; // 只能开启一个
                 btnSelectFeat.Text = "清除";
+                _editMod = false;
             }
             else
             {
-                _SelectFeatMod = false;
-                btnSelectFeat.Text = "要素选择";
+                // 矩形框选择
+                btnSelectFeat.Text = "矩形框要素选择";
                 IActiveView pActiveView = MapControl.ActiveView;
                 pActiveView.FocusMap.ClearSelection();
                 pActiveView.PartialRefresh(
                     esriViewDrawPhase.esriViewGeoSelection, null, pActiveView.Extent
                     );
+                _SelectFeatMod = false;
+                _editMod = false;
+                _pointSelectMod = false;
             }
-
-
         }
         /// <summary>
         /// 测量
@@ -322,13 +331,37 @@ namespace GISDemo
             #endregion
         }
 
+        private void MapControl_OnMouseMove(object sender, ESRI.ArcGIS.Controls.IMapControlEvents2_OnMouseMoveEvent e)
+        {
+            #region 获取鼠标坐标和地图尺寸单位
+            // 获取比例尺数据
+            double scale = MapControl.Map.MapScale;
+            string coordinate = string.Format(
+                "{0},{1}", e.mapX.ToString("#######.##"),
+                e.mapY.ToString("#######.##"));
+            string unite = MapControl.MapUnits.ToString().Substring(4);
+            // 设置比例尺和鼠标点坐标
+            tbCoord.Text = coordinate;
+            tbScale.Text = "1:" + scale.ToString("######.###");
+            #endregion
+
+            #region 编辑状态
+
+            #endregion
+        }
+
         private void MapControl_OnMouseDown(object sender, ESRI.ArcGIS.Controls.IMapControlEvents2_OnMouseDownEvent e)
         {
+            #region 地图平移
             if (e.button == 2 && _isPan ==true)
             {
                 MapControl.MousePointer = ESRI.ArcGIS.Controls.esriControlsMousePointer.esriPointerHand;
                 MapControl.Pan();
+                // 鼠标样式复原为箭头型
+                MapControl.MousePointer = ESRI.ArcGIS.Controls.esriControlsMousePointer.esriPointerArrow;
             }
+            #endregion
+            #region 拉框选择
             if (_SelectFeatMod)
             {
                 // 矩形框选择要素
@@ -349,7 +382,22 @@ namespace GISDemo
                 pGeom = pEnv as IGeometry;
                 MapControl.Map.SelectByShape(pGeom, null, false);
                 MapControl.Refresh(esriViewDrawPhase.esriViewGeoSelection, null, null);
+            }
 
+            #endregion
+            if (_editMod && e.button == 1)
+            {
+                MapControl.Map.ClearSelection();
+                MapControl.ActiveView.FocusMap.ClearSelection();
+                OnMouseDownnWhileEdit(1, 0, e.x, e.y);
+            }
+            if (_selectByPoint)
+            {
+                MapControl.Map.FeatureSelection.Clear();
+                IPoint selectPoint = new PointClass();
+                selectPoint.PutCoords(e.x, e.y);
+                MapControl.Map.SelectByShape(selectPoint as IGeometry, null, false);
+                MapControl.Refresh(esriViewDrawPhase.esriViewGeoSelection, null, null);
             }
         }
 
@@ -363,6 +411,224 @@ namespace GISDemo
 
         private void btnLoadCSV_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void TocControl_OnMouseDown(object sender, ESRI.ArcGIS.Controls.ITOCControlEvents_OnMouseDownEvent e)
+        {
+            IFeatureLayer tocFeatLayer = null;
+            ILayer moveLayer;
+            int toIndex;
+            if (e.button == 2)
+            {
+                esriTOCControlItem pItem = esriTOCControlItem.esriTOCControlItemNone;
+                IBasicMap pMap = null;object unk = null;
+                object data = null;ILayer pLayer = null;
+                TocControl.HitTest(e.x, e.y, ref pItem, ref pMap,ref pLayer, ref unk, ref data);
+                tocFeatLayer = pLayer as IFeatureLayer;
+                if (pItem == esriTOCControlItem.esriTOCControlItemLayer && tocFeatLayer != null)
+                {
+                    ContextMenuStrip.Show(Control.MousePosition);
+                }
+            }
+        }
+        /// <summary>
+        /// 选择并高亮元素
+        /// </summary>
+        private void SelectAndHighlightFeature()
+        {
+            // 获取第一个图层
+            ILayer curLayer = MapControl.get_Layer(0);
+            IFeatureLayer curFeatureLayer;
+            curFeatureLayer = curLayer as IFeatureLayer;
+            IFeatureSelection featSelection = curFeatureLayer as IFeatureSelection;
+            IQueryFilter queryFilter = new QueryFilterClass();
+            queryFilter.WhereClause = "SELECT * FROM testPoint WHERE pop > 4;";
+            IActiveView curActiveView = MapControl.Map as IActiveView;
+            featSelection.SelectFeatures(queryFilter, esriSelectionResultEnum.esriSelectionResultAdd, false);
+            curActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeoSelection, null, curActiveView.Extent);
+
+        }
+
+        /// <summary>
+        /// 获取几何类型
+        /// </summary>
+        /// <param name="featureLayer"></param>
+        /// <returns></returns>
+        private IGeometry GetFeatureLayerGeometry(IFeatureLayer featureLayer)
+        {
+            IGeometry geom = null;
+            ITopologicalOperator topoOperator;
+            IFeatureCursor featCursor = featureLayer.Search(null, false);
+            // 获取IFeature接口中第一个元素
+            IFeature feat = featCursor.NextFeature();
+            while (feat != null)
+            {
+                if (geom != null)
+                {
+                    topoOperator = geom as ITopologicalOperator;
+                    geom = topoOperator.Union(feat.Shape);
+
+                }
+                else
+                {
+                    geom = feat.Shape;
+                }
+                feat = featCursor.NextFeature();
+            }
+            return geom;
+        }
+        /// <summary>
+        /// 空间位置查询
+        /// </summary>
+        private void SelectByLocation()
+        {
+            ILayer layer=  MapControl.get_Layer(0);
+            IFeatureLayer curFeatLayer = layer as IFeatureLayer;
+            ISpatialFilter spatialfilter = new SpatialFilterClass();
+            spatialfilter.Geometry = GetFeatureLayerGeometry(curFeatLayer);
+
+        }
+
+        private void btnHighlight_Click(object sender, EventArgs e)
+        {
+            SelectAndHighlightFeature();
+        }
+
+        private void btnSelectByLocation_Click(object sender, EventArgs e)
+        {
+            _selectByPoint = true;
+
+        }
+
+        /// <summary>
+        /// 获取当前图层中被选中的要素
+        /// </summary>
+       private void GetSelectionSet()
+        {
+            ILayer curLayer = MapControl.get_Layer(0);
+            IFeatureLayer curfeatLayer = curLayer as IFeatureLayer;
+            IFeatureSelection featSelection = curLayer  as IFeatureSelection;
+            ISelectionSet selectionSet = featSelection.SelectionSet;
+            // 获取属性字段
+            IFields fields = curfeatLayer.FeatureClass.Fields;
+            //MessageBox.Show($"Selected feature count:{ selectionSet.Count}");
+            for (var j = 0; j < fields.FieldCount; j++)
+            {
+                Console.WriteLine(fields.get_Field(j).AliasName);
+            }
+
+            ICursor cursor;
+            selectionSet.Search(null, false, out cursor);
+            IFeatureCursor featCursor = cursor as IFeatureCursor;
+            IFeature feat = featCursor.NextFeature();
+            string[] fieldValue;
+            while (feat != null)
+            {
+                fieldValue = new string[fields.FieldCount];
+                for (int i = 0; i < fields.FieldCount; i++)
+                {
+                    fieldValue[i] = feat.get_Value(i).ToString();
+                    Console.WriteLine($"value:{ fieldValue[i]}");
+                }
+                feat = featCursor.NextFeature();
+            }
+        }
+
+        private void btn_Click(object sender, EventArgs e)
+        {
+            // 关闭选择模式
+            _SelectFeatMod = false;
+            curEngineEditor = new EngineEditorClass();
+            IMap curMap = MapControl.Map as IMap;
+            IFeatureLayer curlayer = MapControl.get_Layer(0) as IFeatureLayer;
+            IDataset curDataSet = curlayer.FeatureClass as IDataset;
+            IWorkspace cws = curDataSet.Workspace;
+            curEngineEditor.EditSessionMode = esriEngineEditSessionMode.esriEngineEditSessionModeNonVersioned;
+            curEditorTask = curEngineEditor as IEngineEditTask;
+            curEditorTask = curEngineEditor.GetTaskByUniqueName("ControlToolsEditingCreateNewFeatureTask");
+            curEngineEditor.CurrentTask = curEditorTask;
+            curEngineEditor.EnableUndoRedo(true);
+            curEngineEditor.StartEditing(cws, curMap);
+            _editMod = true;
+
+            // 设置编辑图层
+            curEngineEditLayer = curEngineEditor as IEngineEditLayers;
+            curEngineEditLayer.SetTargetLayer(curlayer, 0);
+
+        }
+        private void OnMouseDownnWhileEdit(int button, int shift, int x, int y)
+        {
+            IActiveView curActiveView = MapControl.ActiveView;
+            IMap pMap = MapControl.Map;
+            IFeatureLayer tFeatLayer = curEngineEditLayer.TargetLayer;
+            IFeatureClass tFeatclass = tFeatLayer.FeatureClass;
+            IPoint pPoint = curActiveView.ScreenDisplay.DisplayTransformation.ToMapPoint(x, y);
+            IGeometry geom = pPoint as IGeometry;
+            double dLength = 0;
+            ITopologicalOperator topoOperator = geom as ITopologicalOperator;
+            ISpatialFilter pSpatailFilter = new SpatialFilterClass();
+
+            switch (tFeatclass.ShapeType)
+            {
+                case esriGeometryType.esriGeometryPoint:
+                    pSpatailFilter.SpatialRel = esriSpatialRelEnum.esriSpatialRelContains;
+                    dLength = MapManager.Pixel2MapUnits(curActiveView, 9);
+                    break;
+                case esriGeometryType.esriGeometryPolygon:
+                    pSpatailFilter.SpatialRel = esriSpatialRelEnum.esriSpatialRelIntersects;
+                    break;
+                case esriGeometryType.esriGeometryPolyline:
+                    pSpatailFilter.SpatialRel = esriSpatialRelEnum.esriSpatialRelCrosses;
+                    break;
+            }
+            IGeometry pBuffer = null;
+            pBuffer = topoOperator.Buffer(dLength);
+            geom = pBuffer.Envelope as IGeometry;
+            pSpatailFilter.Geometry = geom;
+            pSpatailFilter.GeometryField = tFeatclass.ShapeFieldName;
+            IQueryFilter pQueryFiler = pSpatailFilter as IQueryFilter;
+            IFeatureCursor featCursor = tFeatclass.Search(pQueryFiler, false);
+            IFeature pFeat = featCursor.NextFeature();
+            while (pFeat != null)
+            {
+                pMap.SelectFeature(tFeatLayer as ILayer, pFeat);
+
+                pFeat = featCursor.NextFeature();
+            }
+            curActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeoSelection, null, null);
+            System.Runtime.InteropServices.Marshal.FinalReleaseComObject(featCursor);
+        }
+
+        /// <summary>
+        /// 移动要素
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        private void  MoveFeature(int x, int y)
+        {
+            IActiveView curView = MapControl.ActiveView;
+            IPoint m_start = MapControl.ActiveView.ScreenDisplay.DisplayTransformation.ToMapPoint(x, y);
+            if (curEngineEditor == null)
+            {
+                return;
+            }
+            IFeatureCursor curFeatCur = MapManager.GetSelectedFeatures(curEngineEditLayer.TargetLayer);
+            if (curFeatCur == null)
+            {
+                MessageBox.Show("未选择任何要素！");
+                return;
+            }
+            IFeature curFeat = curFeatCur.NextFeature();
+            IMoveGeometryFeedback moveGeoFeedback = new MoveGeometryFeedbackClass();
+            moveGeoFeedback.Display = curView.ScreenDisplay;
+            while (curFeat != null)
+            {
+                moveGeoFeedback.AddGeometry(curFeat.Shape);
+                curFeat = curFeatCur.NextFeature();
+            }
+            moveGeoFeedback.Start(m_start);
+            System.Runtime.InteropServices.Marshal.ReleaseComObject((curFeatCur));
 
         }
     }

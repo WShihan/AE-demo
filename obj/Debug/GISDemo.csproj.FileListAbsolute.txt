@@ -66,14 +66,3 @@ C:\Users\Administrator\Desktop\AE-demo-master\obj\Debug\GISDemo.csproj.CoreCompi
 C:\Users\Administrator\Desktop\AE-demo-master\obj\Debug\GISDemo.csproj.CopyComplete
 C:\Users\Administrator\Desktop\AE-demo-master\obj\Debug\GISDemo.exe
 C:\Users\Administrator\Desktop\AE-demo-master\obj\Debug\GISDemo.pdb
-E:\Desktop\AE-demo-master\bin\Debug\GISDemo.exe.config
-E:\Desktop\AE-demo-master\obj\Debug\GISDemo.exe
-E:\Desktop\AE-demo-master\obj\Debug\GISDemo.pdb
-E:\Desktop\ff\bin\Debug\GISDemo.exe.config
-E:\Desktop\ff\obj\Debug\GISDemo.exe
-E:\Desktop\ff\obj\Debug\GISDemo.pdb
-E:\Desktop\ff\obj\Debug\GISDemo.csprojResolveAssemblyReference.cache
-E:\Desktop\ff\obj\Debug\GISDemo.appMainUI.resources
-E:\Desktop\ff\obj\Debug\GISDemo.asset.UI.ExportMap.resources
-E:\Desktop\ff\obj\Debug\GISDemo.Properties.Resources.resources
-E:\Desktop\ff\obj\Debug\GISDemo.csproj.GenerateResource.Cache
