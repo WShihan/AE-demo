@@ -1,0 +1,12 @@
+C:\Users\Administrator\source\repos\edit\bin\Debug\edit.exe
+C:\Users\Administrator\source\repos\edit\bin\Debug\edit.pdb
+C:\Users\Administrator\source\repos\edit\bin\Debug\ESRI.ArcGIS.AxControls.dll
+C:\Users\Administrator\source\repos\edit\bin\Debug\ESRI.ArcGIS.Version.dll
+C:\Users\Administrator\source\repos\edit\obj\Debug\edit.csproj.AssemblyReference.cache
+C:\Users\Administrator\source\repos\edit\obj\Debug\edit.Form1.resources
+C:\Users\Administrator\source\repos\edit\obj\Debug\edit.Properties.Resources.resources
+C:\Users\Administrator\source\repos\edit\obj\Debug\edit.csproj.GenerateResource.cache
+C:\Users\Administrator\source\repos\edit\obj\Debug\edit.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\edit\obj\Debug\edit.csproj.CopyComplete
+C:\Users\Administrator\source\repos\edit\obj\Debug\edit.exe
+C:\Users\Administrator\source\repos\edit\obj\Debug\edit.pdb

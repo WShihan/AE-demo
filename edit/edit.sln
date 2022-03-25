@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32126.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "edit", "edit.csproj", "{FA0E8161-6791-40C0-A545-90222A095972}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA0E8161-6791-40C0-A545-90222A095972}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA0E8161-6791-40C0-A545-90222A095972}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA0E8161-6791-40C0-A545-90222A095972}.Debug|x86.ActiveCfg = Debug|x86
+		{FA0E8161-6791-40C0-A545-90222A095972}.Debug|x86.Build.0 = Debug|x86
+		{FA0E8161-6791-40C0-A545-90222A095972}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA0E8161-6791-40C0-A545-90222A095972}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA0E8161-6791-40C0-A545-90222A095972}.Release|x86.ActiveCfg = Release|x86
+		{FA0E8161-6791-40C0-A545-90222A095972}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4B88D4C5-916D-4098-881D-35252EECC532}
+	EndGlobalSection
+EndGlobal
