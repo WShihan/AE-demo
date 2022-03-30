@@ -11,9 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using ESRI.ArcGIS.Geometry;
-using MapOperation;
-using edit.EditManager;
 using ESRI.ArcGIS.Display;
+using Manager.edit;
 
 namespace edit
 {
@@ -47,6 +46,8 @@ namespace edit
         private EditSelect curEditSelect;
         private EditMove curEditMove;
         private EditAdd cEditAdd;
+        private EditUndo cEditUndo;
+        private EditDelelte cEditDelete;
         #endregion
 
         public edit()
@@ -58,7 +59,7 @@ namespace edit
 
         private void edit_Load(object sender, EventArgs e)
         {
-            this.MapControl.AddShapeFile(@"C:\Users\Administrator\Desktop\TempData", "testPoly");
+            this.MapControl.AddShapeFile(@"C:\Users\acer\source\repos\GISDemo\asset\data", "testLine");
         }
 
         private void btnStart_Click(object sender, EventArgs e)
@@ -214,6 +215,7 @@ namespace edit
         private void btnMove_Click(object sender, EventArgs e)
         {
             _editMove = true;
+            _editAdd = false;
             curEditMove = new EditMove(curEngineEditor, curEngineEditLayer, curActiveView, curMap, curMoveGeoFeedback);
             EditProcessChange(3);
         }
@@ -221,7 +223,7 @@ namespace edit
         private void btnEnd_Click(object sender, EventArgs e)
         {
             
-            EditEnd cEditEnd = new EditEnd(curEngineEditor, curActiveView, curMap, false);
+            EditEnd cEditEnd = new EditEnd(curEngineEditor, curActiveView, curMap, true);
             cEditEnd.clear();
             MessageBox.Show("保存成功");
         }
@@ -230,6 +232,8 @@ namespace edit
         {
             if (_editStart)
             {
+                _editMove = false;
+                _editSelect = false;
                 _editAdd = true;
                 cEditAdd = new EditAdd(curEngineEditor, curEngineEditLayer, curActiveView, curActiveView.FocusMap);
             }
@@ -238,6 +242,19 @@ namespace edit
         private void MapControl_OnDoubleClick(object sender, IMapControlEvents2_OnDoubleClickEvent e)
         {
             cEditAdd.CaptureDblClick();
+        }
+
+        private void btnUndo_Click(object sender, EventArgs e)
+        {
+            cEditUndo = new EditUndo(curEngineEditor, curActiveView);
+            cEditUndo.Execute();
+           
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            cEditDelete = new EditDelelte(curEngineEditor, curEngineEditLayer, curActiveView);
+            cEditDelete.Execute();
         }
     }
 }

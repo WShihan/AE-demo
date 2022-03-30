@@ -31,7 +31,6 @@ namespace edit
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(edit));
             this.panelMap = new System.Windows.Forms.Panel();
-            this.MapControl = new ESRI.ArcGIS.Controls.AxMapControl();
             this.axLicenseControl1 = new ESRI.ArcGIS.Controls.AxLicenseControl();
             this.panelTop = new System.Windows.Forms.Panel();
             this.btnTest = new System.Windows.Forms.Button();
@@ -42,40 +41,31 @@ namespace edit
             this.btnMove = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.btnDelete = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.btnUndo = new System.Windows.Forms.ToolStripButton();
+            this.btnRedo = new System.Windows.Forms.ToolStripButton();
+            this.MapControl = new ESRI.ArcGIS.Controls.AxMapControl();
             this.panelMap.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MapControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.axLicenseControl1)).BeginInit();
             this.panelTop.SuspendLayout();
             this.tsp.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MapControl)).BeginInit();
             this.SuspendLayout();
             // 
             // panelMap
             // 
             this.panelMap.Controls.Add(this.MapControl);
             this.panelMap.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMap.Location = new System.Drawing.Point(0, 36);
+            this.panelMap.Location = new System.Drawing.Point(0, 45);
+            this.panelMap.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panelMap.Name = "panelMap";
-            this.panelMap.Size = new System.Drawing.Size(800, 414);
+            this.panelMap.Size = new System.Drawing.Size(1067, 517);
             this.panelMap.TabIndex = 1;
-            // 
-            // MapControl
-            // 
-            this.MapControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MapControl.Location = new System.Drawing.Point(0, 0);
-            this.MapControl.Name = "MapControl";
-            this.MapControl.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("MapControl.OcxState")));
-            this.MapControl.Size = new System.Drawing.Size(800, 414);
-            this.MapControl.TabIndex = 1;
-            this.MapControl.OnMouseDown += new ESRI.ArcGIS.Controls.IMapControlEvents2_Ax_OnMouseDownEventHandler(this.MapControl_OnMouseDown);
-            this.MapControl.OnMouseUp += new ESRI.ArcGIS.Controls.IMapControlEvents2_Ax_OnMouseUpEventHandler(this.MapControl_OnMouseUp);
-            this.MapControl.OnMouseMove += new ESRI.ArcGIS.Controls.IMapControlEvents2_Ax_OnMouseMoveEventHandler(this.MapControl_OnMouseMove);
-            this.MapControl.OnDoubleClick += new ESRI.ArcGIS.Controls.IMapControlEvents2_Ax_OnDoubleClickEventHandler(this.MapControl_OnDoubleClick);
             // 
             // axLicenseControl1
             // 
             this.axLicenseControl1.Enabled = true;
-            this.axLicenseControl1.Location = new System.Drawing.Point(755, 4);
+            this.axLicenseControl1.Location = new System.Drawing.Point(1022, 5);
+            this.axLicenseControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.axLicenseControl1.Name = "axLicenseControl1";
             this.axLicenseControl1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axLicenseControl1.OcxState")));
             this.axLicenseControl1.Size = new System.Drawing.Size(32, 32);
@@ -88,16 +78,18 @@ namespace edit
             this.panelTop.Controls.Add(this.axLicenseControl1);
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
+            this.panelTop.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(800, 36);
+            this.panelTop.Size = new System.Drawing.Size(1067, 45);
             this.panelTop.TabIndex = 0;
             this.panelTop.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(489, 6);
+            this.btnTest.Location = new System.Drawing.Point(652, 8);
+            this.btnTest.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnTest.Name = "btnTest";
-            this.btnTest.Size = new System.Drawing.Size(75, 23);
+            this.btnTest.Size = new System.Drawing.Size(100, 29);
             this.btnTest.TabIndex = 17;
             this.btnTest.Text = "测试";
             this.btnTest.UseVisualStyleBackColor = true;
@@ -107,17 +99,19 @@ namespace edit
             // 
             this.tsp.AllowDrop = true;
             this.tsp.Dock = System.Windows.Forms.DockStyle.None;
+            this.tsp.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.tsp.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnStart,
-            this.btnEnd,
+            this.btnUndo,
+            this.btnRedo,
             this.btnSelect,
             this.btnMove,
             this.toolStripButton1,
             this.btnDelete,
-            this.toolStripButton2});
-            this.tsp.Location = new System.Drawing.Point(9, 4);
+            this.btnEnd});
+            this.tsp.Location = new System.Drawing.Point(12, 5);
             this.tsp.Name = "tsp";
-            this.tsp.Size = new System.Drawing.Size(362, 25);
+            this.tsp.Size = new System.Drawing.Size(452, 31);
             this.tsp.TabIndex = 16;
             this.tsp.Text = "toolStrip1";
             // 
@@ -184,34 +178,60 @@ namespace edit
             this.btnDelete.Size = new System.Drawing.Size(50, 22);
             this.btnDelete.Text = "删除";
             this.btnDelete.ToolTipText = "删除要素";
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // toolStripButton2
+            // btnUndo
             // 
-            this.toolStripButton2.AutoSize = false;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(50, 22);
-            this.toolStripButton2.Text = "添加";
+            this.btnUndo.AutoSize = false;
+            this.btnUndo.Image = ((System.Drawing.Image)(resources.GetObject("btnUndo.Image")));
+            this.btnUndo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnUndo.Name = "btnUndo";
+            this.btnUndo.Size = new System.Drawing.Size(50, 28);
+            this.btnUndo.Text = "撤销";
+            this.btnUndo.Click += new System.EventHandler(this.btnUndo_Click);
+            // 
+            // btnRedo
+            // 
+            this.btnRedo.AutoSize = false;
+            this.btnRedo.Image = ((System.Drawing.Image)(resources.GetObject("btnRedo.Image")));
+            this.btnRedo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnRedo.Name = "btnRedo";
+            this.btnRedo.Size = new System.Drawing.Size(50, 28);
+            this.btnRedo.Text = "恢复";
+            // 
+            // MapControl
+            // 
+            this.MapControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MapControl.Location = new System.Drawing.Point(0, 0);
+            this.MapControl.Margin = new System.Windows.Forms.Padding(4);
+            this.MapControl.Name = "MapControl";
+            this.MapControl.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("MapControl.OcxState")));
+            this.MapControl.Size = new System.Drawing.Size(1067, 517);
+            this.MapControl.TabIndex = 1;
+            this.MapControl.OnMouseDown += new ESRI.ArcGIS.Controls.IMapControlEvents2_Ax_OnMouseDownEventHandler(this.MapControl_OnMouseDown);
+            this.MapControl.OnMouseUp += new ESRI.ArcGIS.Controls.IMapControlEvents2_Ax_OnMouseUpEventHandler(this.MapControl_OnMouseUp);
+            this.MapControl.OnMouseMove += new ESRI.ArcGIS.Controls.IMapControlEvents2_Ax_OnMouseMoveEventHandler(this.MapControl_OnMouseMove);
+            this.MapControl.OnDoubleClick += new ESRI.ArcGIS.Controls.IMapControlEvents2_Ax_OnDoubleClickEventHandler(this.MapControl_OnDoubleClick);
             // 
             // edit
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1067, 562);
             this.Controls.Add(this.panelMap);
             this.Controls.Add(this.panelTop);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "edit";
             this.Text = "edit";
             this.Load += new System.EventHandler(this.edit_Load);
             this.panelMap.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.MapControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.axLicenseControl1)).EndInit();
             this.panelTop.ResumeLayout(false);
             this.panelTop.PerformLayout();
             this.tsp.ResumeLayout(false);
             this.tsp.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MapControl)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -229,7 +249,8 @@ namespace edit
         private System.Windows.Forms.Button btnTest;
         private System.Windows.Forms.ToolStripButton btnDelete;
         private System.Windows.Forms.ToolStripButton btnEnd;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton btnUndo;
+        private System.Windows.Forms.ToolStripButton btnRedo;
     }
 }
 
