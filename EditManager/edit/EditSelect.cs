@@ -7,11 +7,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using edit.Interface;
 using System.Windows.Forms;
 
 namespace Manager.edit
 {
-    public class EditSelect
+    public class EditSelect:IEditeProcess
     {
         private bool _editMod = false;
         private IEngineEditor m_EngineEditor;
@@ -31,7 +32,7 @@ namespace Manager.edit
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public void SelectFeat(int x, int y)
+        public void OnMouseDown(int x, int y)
         {
             try
             {
@@ -89,5 +90,12 @@ namespace Manager.edit
                 MessageBox.Show($"shape:{ ex.ToString() }");
             }
         }
+        public void OnMouseMove(int x, int y)
+        {
+
+        }
+        public void OnMouseUp(int x, int y) { }
+        public void OnKeyDown() { }
+        public void OnKeyUp() { }
     }
 }

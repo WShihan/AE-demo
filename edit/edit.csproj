@@ -121,17 +121,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="app.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="app.Designer.cs">
+      <DependentUpon>app.cs</DependentUpon>
     </Compile>
-    <Compile Include="Interface\IEditFunc.cs" />
+    <Compile Include="framework\application.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="app.resx">
+      <DependentUpon>app.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -141,6 +141,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="App.config" />
     <None Include="packages.config" />
@@ -155,10 +156,56 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EditManager\Manager.csproj">
-      <Project>{d93d6682-0126-43ea-89bb-b9d2872cb782}</Project>
-      <Name>Manager</Name>
+    <ProjectReference Include="..\framework\framework.csproj">
+      <Project>{e099384f-0f46-42ab-9ef9-0b2bb5932a94}</Project>
+      <Name>framework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Process\Process.csproj">
+      <Project>{ec5f07e5-e8ad-49d1-83e7-65c9d877edf2}</Project>
+      <Name>Process</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icon\AddData.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icon\AddVertex.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icon\Delete.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icon\DelVertex.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icon\Move.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icon\MoveVertex.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icon\Redo.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icon\SaveEdits.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icon\select.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icon\SelTool.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icon\StartEditing.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icon\StopEditing.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icon\table.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icon\Undo.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

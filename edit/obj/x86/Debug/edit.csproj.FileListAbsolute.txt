@@ -115,5 +115,7 @@ C:\Users\acer\source\repos\GISDemo\edit\bin\x86\Debug\Newtonsoft.Json.xml
 C:\Users\acer\source\repos\GISDemo\edit\bin\x86\Debug\edit.exe.config
 C:\Users\acer\source\repos\GISDemo\edit\bin\x86\Debug\edit.exe
 C:\Users\acer\source\repos\GISDemo\edit\obj\x86\Debug\edit.exe
-C:\Users\acer\source\repos\GISDemo\edit\bin\x86\Debug\EditManager.pdb
-C:\Users\acer\source\repos\GISDemo\edit\bin\x86\Debug\EditManager.dll
+C:\Users\acer\source\repos\GISDemo\edit\bin\x86\Debug\framework.dll
+C:\Users\acer\source\repos\GISDemo\edit\bin\x86\Debug\Process.dll
+C:\Users\acer\source\repos\GISDemo\edit\bin\x86\Debug\framework.pdb
+C:\Users\acer\source\repos\GISDemo\edit\bin\x86\Debug\Process.pdb
