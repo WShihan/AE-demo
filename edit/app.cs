@@ -12,12 +12,14 @@ using System.Windows.Forms;
 using ESRI.ArcGIS.Geometry;
 using ESRI.ArcGIS.Display;
 using Process.edit;
+using System.Xml;
 
 namespace edit
 {
     public partial class edit : Form
 
     {
+        private XMLReader xmlReader;
         // 编辑开关变量
         private bool _editStart = false;
         private bool _editSelect = false;
@@ -27,6 +29,7 @@ namespace edit
         private bool _editEnd = false;
         private int _editProcess = 0;
         private bool _isTest = false;
+
 
 
         private IEngineEditLayers curEngineEditLayer;
@@ -58,9 +61,11 @@ namespace edit
 
         private void edit_Load(object sender, EventArgs e)
         {
-            XmlReader xmlReader = new XmlReader();
-            xmlReader.Read("data");
-            this.MapControl.AddShapeFile(@"C:\Users\acer\source\repos\GISDemo\asset\data", "testLine");
+            xmlReader = new XMLReader();
+            string linePath = xmlReader.Read("/configuration/testData/Line").Attributes["path"].Value;
+            string lineName = xmlReader.Read("/configuration/testData/Line").Attributes["name"].Value;
+
+            this.MapControl.AddShapeFile(linePath, lineName);
         }
 
         private void btnStart_Click(object sender, EventArgs e)
@@ -104,7 +109,7 @@ namespace edit
 
         private void MapControl_OnMouseDown(object sender, IMapControlEvents2_OnMouseDownEvent e)
         {
-            if (e.button == 2)
+            if (e.button == 4)
             {
                 MapControl.MousePointer = ESRI.ArcGIS.Controls.esriControlsMousePointer.esriPointerHand;
                 MapControl.Pan();

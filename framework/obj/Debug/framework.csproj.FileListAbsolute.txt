@@ -47,7 +47,6 @@ C:\Users\acer\source\repos\GISDemo\framework\obj\Debug\framework.csproj.CoreComp
 C:\Users\acer\source\repos\GISDemo\framework\obj\Debug\framework.csproj.CopyComplete
 C:\Users\acer\source\repos\GISDemo\framework\obj\Debug\framework.dll
 C:\Users\acer\source\repos\GISDemo\framework\obj\Debug\framework.pdb
-C:\Users\acer\source\repos\GISDemo\framework\obj\Debug\framework.csproj.AssemblyReference.cache
 C:\Users\Administrator\Desktop\AE-demo\framework\bin\Debug\framework.dll
 C:\Users\Administrator\Desktop\AE-demo\framework\bin\Debug\framework.pdb
 C:\Users\Administrator\Desktop\AE-demo\framework\bin\Debug\ESRI.ArcGIS.Carto.dll

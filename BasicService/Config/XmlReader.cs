@@ -8,28 +8,28 @@ using System.Xml;
 
 namespace BasicService.configratior
 {
-    public class XmlReader
+    public class XMLReader
     {
-        private XmlDocument _xmlDoc;
+        private XmlDocument xmlDoc;
 
-        public XmlReader()
+        public XMLReader()
         {
-            string xmlPath = Path.Combine(Application.StartupPath, "AppConfig.xl");
-            _xmlDoc = new XmlDocument();
-            _xmlDoc.LoadXml(xmlPath);
+            string xmlPath = Path.Combine(Application.StartupPath, "test.xml");
+            xmlDoc = new XmlDocument();
+            xmlDoc.Load(xmlPath);
         }
         public XmlNode Read(string nodeName)
         {
-            XmlNodeList node = _xmlDoc.GetElementsByTagName(nodeName);
-            if (node.Count > 0)
+            XmlNodeList nodes = xmlDoc.SelectNodes(nodeName);
+            if (nodes.Count > 0)
             {
-                return node[0];
+                return nodes[0];
             }
             return null;
         }
-        public XmlNode Read(XmlNode nodeObj, string nodeName)
+        public string Read(XmlNode nodeObj, string nodeName)
         {
-
+            return nodeObj.SelectSingleNode("mxd").InnerText;
         }
     }
 }

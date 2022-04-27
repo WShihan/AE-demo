@@ -168,3 +168,5 @@ C:\Users\Administrator\Desktop\AE-demo\edit\obj\x86\Debug\edit.csproj.CoreCompil
 C:\Users\Administrator\Desktop\AE-demo\edit\obj\x86\Debug\edit.csproj.CopyComplete
 C:\Users\Administrator\Desktop\AE-demo\edit\obj\x86\Debug\edit.exe
 C:\Users\Administrator\Desktop\AE-demo\edit\obj\x86\Debug\edit.pdb
+C:\Users\acer\source\repos\GISDemo\edit\bin\x86\Debug\BasicService.dll
+C:\Users\acer\source\repos\GISDemo\edit\bin\x86\Debug\BasicService.pdb
