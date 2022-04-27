@@ -156,6 +156,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BasicService\BasicService.csproj">
+      <Project>{1d5ee91f-7d6a-4411-8f23-00ed59603714}</Project>
+      <Name>BasicService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\framework\framework.csproj">
       <Project>{e099384f-0f46-42ab-9ef9-0b2bb5932a94}</Project>
       <Name>framework</Name>
@@ -206,6 +210,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Icon\Undo.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AppConfig.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

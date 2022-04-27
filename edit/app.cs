@@ -7,8 +7,7 @@ using System.Data;
 using System.Drawing;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.DataSourcesFile;
-using System.Linq;
-using System.Text;
+using BasicService.configratior;
 using System.Windows.Forms;
 using ESRI.ArcGIS.Geometry;
 using ESRI.ArcGIS.Display;
@@ -59,6 +58,8 @@ namespace edit
 
         private void edit_Load(object sender, EventArgs e)
         {
+            XmlReader xmlReader = new XmlReader();
+            xmlReader.Read("data");
             this.MapControl.AddShapeFile(@"C:\Users\acer\source\repos\GISDemo\asset\data", "testLine");
         }
 
