@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+	<testData>
+		<Line  path="C:\Users\acer\source\repos\GISDemo\asset\data" name="testLine">mxd文件路径</Line>
+	</testData>
+</configuration>
