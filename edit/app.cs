@@ -61,11 +61,11 @@ namespace edit
 
         private void edit_Load(object sender, EventArgs e)
         {
-            xmlReader = new XMLReader();
-            string linePath = xmlReader.Read("/configuration/testData/Line").Attributes["path"].Value;
-            string lineName = xmlReader.Read("/configuration/testData/Line").Attributes["name"].Value;
+            xmlReader = XMLReader.Instance;
+            string shapPath = xmlReader.Read("/configuration/testData/Point").Attributes["path"].Value;
+            string shpName = xmlReader.Read("/configuration/testData/Point").Attributes["name"].Value;
 
-            this.MapControl.AddShapeFile(linePath, lineName);
+            this.MapControl.AddShapeFile(shapPath, shpName);
         }
 
         private void btnStart_Click(object sender, EventArgs e)

@@ -11,8 +11,8 @@ namespace BasicService.configratior
     public class XMLReader
     {
         private XmlDocument xmlDoc;
-
-        public XMLReader()
+        private static XMLReader _xmlReader;
+        private XMLReader()
         {
             string xmlPath = Path.Combine(Application.StartupPath, "test.xml");
             xmlDoc = new XmlDocument();
@@ -26,6 +26,21 @@ namespace BasicService.configratior
                 return nodes[0];
             }
             return null;
+        }
+        public static XMLReader Instance
+        {
+            get
+            {
+                if (_xmlReader != null)
+                {
+                    return _xmlReader;
+                }
+                else
+                {
+                    _xmlReader = new XMLReader();
+                    return _xmlReader;
+                }
+            }
         }
         public string Read(XmlNode nodeObj, string nodeName)
         {

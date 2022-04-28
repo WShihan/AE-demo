@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <configuration>
 	<testData>
-		<Line  path="C:\Users\acer\source\repos\GISDemo\asset\data" name="testLine">mxd文件路径</Line>
+		<mxd name="地图文档">地图文档</mxd>
+		<Line  path="C:\Users\acer\source\repos\GISDemo\asset\data" name="testLine">测试线数据</Line>
+		<Point path="C:\Users\acer\source\repos\GISDemo\asset\data" name="testPoint">测试点数据</Point>
+		<Polygon path="C:\Users\acer\source\repos\GISDemo\asset\data" name="testPolygon">测试点数据</Polygon>
 	</testData>
 </configuration>
