@@ -38,15 +38,14 @@ namespace edit.UI
             // 
             // dgv
             // 
-            this.dgv.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv.Location = new System.Drawing.Point(0, 49);
+            this.dgv.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv.Location = new System.Drawing.Point(0, 0);
+            this.dgv.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dgv.Name = "dgv";
             this.dgv.RowHeadersWidth = 51;
             this.dgv.RowTemplate.Height = 27;
-            this.dgv.Size = new System.Drawing.Size(287, 407);
+            this.dgv.Size = new System.Drawing.Size(215, 365);
             this.dgv.TabIndex = 0;
             // 
             // panel1
@@ -54,26 +53,29 @@ namespace edit.UI
             this.panel1.Controls.Add(this.tbSearch);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(287, 456);
+            this.panel1.Size = new System.Drawing.Size(215, 365);
             this.panel1.TabIndex = 1;
             // 
             // tbSearch
             // 
             this.tbSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbSearch.Location = new System.Drawing.Point(12, 13);
+            this.tbSearch.Location = new System.Drawing.Point(9, 10);
+            this.tbSearch.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tbSearch.Name = "tbSearch";
-            this.tbSearch.Size = new System.Drawing.Size(263, 25);
+            this.tbSearch.Size = new System.Drawing.Size(198, 21);
             this.tbSearch.TabIndex = 0;
             // 
             // Frm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(287, 456);
+            this.ClientSize = new System.Drawing.Size(215, 365);
             this.Controls.Add(this.dgv);
             this.Controls.Add(this.panel1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Frm";
             this.Text = "Frm";
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();

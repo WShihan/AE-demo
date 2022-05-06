@@ -13,6 +13,7 @@ using framework.Interface;
 using Process.edit;
 using System.Data;
 using edit.UI;
+using edit.Test;
 
 namespace edit
 {
@@ -66,8 +67,10 @@ namespace edit
         {
             dbProvide = new DBProvider();
             xmlReader = XMLReader.Instance;
+            string mxdPath = xmlReader.Read("/configuration/testData/mxd").InnerText;
+            //MapControl.LoadMxFile(mxdPath);
 
-            MapControl.AddShapeFile(xmlReader.Read("/configuration/testData/Line").Attributes["path"].Value, "testLine");
+            //MapControl.AddShapeFile(xmlReader.Read("/configuration/testData/path").InnerText, "testLine");
             //IFeatureClass featClass = dbProvide.workspace.OpenFeatureClass("Yunnan");
             //ILayer lyr;
             //IFeatureLayer featLyr = new FeatureLayerClass();
@@ -179,7 +182,7 @@ namespace edit
 
         private void MapControl_OnMouseMove(object sender, IMapControlEvents2_OnMouseMoveEvent e)
         {
-            SetMapInfo(e.mapX, e.mapY);
+            //SetMapInfo(e.mapX, e.mapY);
             if (_editMove)
             {
                 curEditMove.OnMouseMove(1, 0, e.x, e.y);
@@ -236,37 +239,46 @@ namespace edit
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-            IFeatureClass featClass = dbProvide.workspace.OpenFeatureClass("YunnanRiver");
-            IFields fields = featClass.Fields;
+            List<TestMan> lst = new List<TestMan>();
+            lst.Add(new TestMan("bruce", 10, "USA", "dkfjd"));
+            lst.Add(new TestMan("bruce", 10, "USA", "dkfjd"));
+            lst.Add(new TestMan("bruce", 10, "USA", "dkfjd"));
+            lst.Add(new TestMan("bruce", 10, "USA", "dkfjd"));
+
+
+            //IFeatureClass featClass = dbProvide.workspace.OpenFeatureClass("YunnanRiver");
+            //IFields fields = featClass.Fields;
             Frm frm = new Frm();
-            IQueryFilter pQueryFilter = new QueryFilterClass();
-            pQueryFilter.WhereClause = " name LIKE '%南%'";
-            IFeatureCursor pFeatureCursor = featClass.Search(pQueryFilter, false);
-            IFeature pFeatureIfExit = pFeatureCursor.NextFeature();
-            List<IFeature> featList = new List<IFeature>();
-            List<string> fieldList = new List<string>();
+            //IQueryFilter pQueryFilter = new QueryFilterClass();
+            //pQueryFilter.WhereClause = " name LIKE '%南%'";
+            //IFeatureCursor pFeatureCursor = featClass.Search(pQueryFilter, false);
+            //IFeature pFeatureIfExit = pFeatureCursor.NextFeature();
+            //List<IFeature> featList = new List<IFeature>();
+            //List<string> fieldList = new List<string>();
 
-            DataTable dt = new DataTable();
-            dt.Columns.Add("名称", typeof(string));
-            int index = featClass.FindField("name");
+            //DataTable dt = new DataTable();
+            //dt.Columns.Add("名称", typeof(string));
+            //int index = featClass.FindField("name");
 
-            for (int i = 0; i < featClass.Fields.FieldCount; i++)
-            {
-                fieldList.Add(featClass.Fields.get_Field(i).Name);
-            }
-            while (pFeatureIfExit != null)
-            {
-                DataRow dr = dt.NewRow();
-                featList.Add(pFeatureIfExit);
-                dr["名称"] = pFeatureIfExit.get_Value(index);
-                dt.Rows.Add(dr);
-                pFeatureIfExit = pFeatureCursor.NextFeature();
-            }
-            frm.dgv.DataSource = dt;
-            frm.dgv.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //for (int i = 0; i < featClass.Fields.FieldCount; i++)
+            //{
+            //    fieldList.Add(featClass.Fields.get_Field(i).Name);
+            //}
+            //while (pFeatureIfExit != null)
+            //{
+            //    DataRow dr = dt.NewRow();
+            //    featList.Add(pFeatureIfExit);
+            //    dr["名称"] = pFeatureIfExit.get_Value(index);
+            //    dt.Rows.Add(dr);
+            //    pFeatureIfExit = pFeatureCursor.NextFeature();
+            //}
+            //frm.dgv.DataSource = dt;
+            //frm.dgv.AutoGenerateColumns = false;
+            frm.dgv.DataSource = lst;
+            frm.dgv.AutoSize = true;
             frm.dgv.CellDoubleClick += Dgv_CellDoubleClick;
             frm.Show(this);
-            EditProcessChange(4);
+            //EditProcessChange(4);
         }
 
         private void Dgv_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -298,7 +310,7 @@ namespace edit
 
         private void MapControl_OnDoubleClick(object sender, IMapControlEvents2_OnDoubleClickEvent e)
         {
-            if (_editMove)
+            if (_editAdd)
             {
                 cEditAdd.CaptureDblClick();
             }
@@ -364,7 +376,6 @@ namespace edit
                 _editSelect = false;
                 _editAdd = true;
                 cEditAdd = new EditAdd(editConxt.Editor, editLayer, editConxt.ActiveView, editConxt.ActiveView.FocusMap);
-                MessageBox.Show(cEditAdd.Name);
             }
         }
 

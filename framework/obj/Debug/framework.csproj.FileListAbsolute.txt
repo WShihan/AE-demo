@@ -92,7 +92,6 @@ C:\Users\Administrator\Desktop\AE-demo\framework\bin\Debug\ESRI.ArcGIS.Animation
 C:\Users\Administrator\Desktop\AE-demo\framework\bin\Debug\ESRI.ArcGIS.Geoprocessing.xml
 C:\Users\Administrator\Desktop\AE-demo\framework\bin\Debug\ESRI.ArcGIS.DataSourcesNetCDF.xml
 C:\Users\Administrator\Desktop\AE-demo\framework\bin\Debug\ESRI.ArcGIS.GeoAnalyst.xml
-C:\Users\Administrator\Desktop\AE-demo\framework\obj\Debug\framework.csproj.AssemblyReference.cache
 C:\Users\Administrator\Desktop\AE-demo\framework\obj\Debug\framework.csproj.CoreCompileInputs.cache
 C:\Users\Administrator\Desktop\AE-demo\framework\obj\Debug\framework.csproj.CopyComplete
 C:\Users\Administrator\Desktop\AE-demo\framework\obj\Debug\framework.dll

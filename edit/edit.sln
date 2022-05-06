@@ -13,6 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicService", "..\BasicSer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugins", "..\Plugins\Plugins.csproj", "{E83F0E50-FE35-42DE-8287-9310DCDB88D2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{72760CA1-1DD4-41DB-82E1-164B8A72E0F2}"
+	ProjectSection(SolutionItems) = preProject
+		Test.cs = Test.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

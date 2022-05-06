@@ -1,9 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <configuration>
 	<testData>
-		<mxd name="地图文档">地图文档</mxd>
-		<Line  path="C:\Users\acer\source\repos\GISDemo\asset\data" name="testLine">测试线数据</Line>
-		<Point path="C:\Users\acer\source\repos\GISDemo\asset\data" name="testPoint">测试点数据</Point>
-		<Polygon path="C:\Users\acer\source\repos\GISDemo\asset\data" name="testPolygon">测试点数据</Polygon>
+		<gdb>C:\Users\Administrator\Desktop\AE-demo\asset\data\db.gdb</gdb>
+		<mxd name="地图文档">C:\Users\acer\source\repos\GISDemo\asset\data\test.mxd</mxd>
+		<path name="测试数据路径">C:\Users\Administrator\Desktop\TempData\shp</path>
+		<Line  name="点">testLine</Line>
+		<Point  name="线">testPoint</Point>
+		<Polygon  name="面">testPolygon</Polygon>
 	</testData>
 </configuration>
