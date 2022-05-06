@@ -98,7 +98,6 @@ C:\Users\acer\source\repos\GISDemo\edit\bin\x86\Debug\ESRI.ArcGIS.DataSourcesRas
 C:\Users\acer\source\repos\GISDemo\edit\bin\x86\Debug\ESRI.ArcGIS.DataSourcesNetCDF.xml
 C:\Users\acer\source\repos\GISDemo\edit\bin\x86\Debug\ESRI.ArcGIS.GeoAnalyst.xml
 C:\Users\acer\source\repos\GISDemo\edit\obj\x86\Debug\edit.csproj.AssemblyReference.cache
-C:\Users\acer\source\repos\GISDemo\edit\obj\x86\Debug\edit.edit.resources
 C:\Users\acer\source\repos\GISDemo\edit\obj\x86\Debug\edit.Properties.Resources.resources
 C:\Users\acer\source\repos\GISDemo\edit\obj\x86\Debug\edit.csproj.GenerateResource.cache
 C:\Users\acer\source\repos\GISDemo\edit\obj\x86\Debug\edit.csproj.CoreCompileInputs.cache
@@ -170,3 +169,11 @@ C:\Users\Administrator\Desktop\AE-demo\edit\obj\x86\Debug\edit.exe
 C:\Users\Administrator\Desktop\AE-demo\edit\obj\x86\Debug\edit.pdb
 C:\Users\acer\source\repos\GISDemo\edit\bin\x86\Debug\BasicService.dll
 C:\Users\acer\source\repos\GISDemo\edit\bin\x86\Debug\BasicService.pdb
+C:\Users\acer\source\repos\GISDemo\edit\obj\x86\Debug\edit.AppFrm.resources
+C:\Users\acer\source\repos\GISDemo\edit\bin\x86\Debug\ESRI.ArcGIS.Carto.dll
+C:\Users\acer\source\repos\GISDemo\edit\bin\x86\Debug\ESRI.ArcGIS.DataSourcesGDB.dll
+C:\Users\acer\source\repos\GISDemo\edit\bin\x86\Debug\ESRI.ArcGIS.GeoDatabaseExtensions.dll
+C:\Users\acer\source\repos\GISDemo\edit\bin\x86\Debug\ESRI.ArcGIS.Carto.xml
+C:\Users\acer\source\repos\GISDemo\edit\bin\x86\Debug\ESRI.ArcGIS.DataSourcesGDB.xml
+C:\Users\acer\source\repos\GISDemo\edit\bin\x86\Debug\ESRI.ArcGIS.GeoDatabaseExtensions.xml
+C:\Users\acer\source\repos\GISDemo\edit\obj\x86\Debug\edit.UI.Frm.resources

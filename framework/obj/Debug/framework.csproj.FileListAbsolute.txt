@@ -97,4 +97,3 @@ C:\Users\Administrator\Desktop\AE-demo\framework\obj\Debug\framework.csproj.Core
 C:\Users\Administrator\Desktop\AE-demo\framework\obj\Debug\framework.csproj.CopyComplete
 C:\Users\Administrator\Desktop\AE-demo\framework\obj\Debug\framework.dll
 C:\Users\Administrator\Desktop\AE-demo\framework\obj\Debug\framework.pdb
-C:\Users\acer\source\repos\GISDemo\framework\obj\Debug\framework.csproj.AssemblyReference.cache

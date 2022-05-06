@@ -174,3 +174,7 @@ C:\Users\Administrator\Desktop\AE-demo\obj\x86\Debug\GISDemo.csproj.CoreCompileI
 C:\Users\Administrator\Desktop\AE-demo\obj\x86\Debug\GISDemo.csproj.CopyComplete
 C:\Users\Administrator\Desktop\AE-demo\obj\x86\Debug\GISDemo.exe
 C:\Users\Administrator\Desktop\AE-demo\obj\x86\Debug\GISDemo.pdb
+C:\Users\acer\source\repos\GISDemo\bin\x86\Debug\Interop.esriCartoXUI.dll
+C:\Users\acer\source\repos\GISDemo\obj\x86\Debug\Interop.esriCartoXUI.dll
+C:\Users\acer\source\repos\GISDemo\obj\x86\Debug\GISDemo.csproj.ResolveComReference.cache
+C:\Users\acer\source\repos\GISDemo\obj\x86\Debug\GISDemo.asset.UI.ExportMap.resources

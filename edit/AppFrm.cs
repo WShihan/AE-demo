@@ -2,24 +2,25 @@
 using ESRI.ArcGIS.Controls;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+using framework.Implementation;
+using BasicService.GIS;
 using ESRI.ArcGIS.Geodatabase;
-using ESRI.ArcGIS.DataSourcesFile;
 using BasicService.configratior;
 using System.Windows.Forms;
 using ESRI.ArcGIS.Geometry;
 using ESRI.ArcGIS.Display;
+using framework.Interface;
 using Process.edit;
-using System.Xml;
+using System.Data;
+using edit.UI;
 
 namespace edit
 {
-    public partial class edit : Form
+    public partial class AppFrm : Form
 
     {
         private XMLReader xmlReader;
+        private DBProvider dbProvide;
         // 编辑开关变量
         private bool _editStart = false;
         private bool _editSelect = false;
@@ -30,19 +31,6 @@ namespace edit
         private int _editProcess = 0;
         private bool _isTest = false;
 
-
-
-        private IEngineEditLayers curEngineEditLayer;
-        private IMap curMap;
-
-        // 编辑内容相关变量
-        IEngineEditor curEngineEditor;
-        IEngineEditTask curEditTask;
-        IActiveView curActiveView;
-        IMoveGeometryFeedback curMoveGeoFeedback;
-        private IPoint fromPoint;
-        private IPoint toPoint;
-
         #region 编辑步骤变量
         // 编辑步骤变量
         private EditSelect curEditSelect;
@@ -52,38 +40,57 @@ namespace edit
         private EditDelelte cEditDelete;
         #endregion
 
-        public edit()
+        // IOC容器
+        IOContainer ioc =IOContainer.InStance;
+        IApp app;
+
+        // 编辑内容相关变量
+        private IEngineEditLayers editLayer;
+        IEditContext editConxt;
+        IMoveGeometryFeedback curMoveGeoFeedback;
+        private IPoint fromPoint;
+        private IPoint toPoint;
+
+        public AppFrm()
         {
             InitializeComponent();
-            curMap = MapControl.Map;
-            curActiveView = MapControl.ActiveView;
+            app = new App();
+            editConxt = app.EditContextIns;
+            editConxt.Map = MapControl.Map;
+            editConxt.ActiveView = MapControl.ActiveView;
+            editConxt.Map = MapControl.Map;
+            editConxt.Editor = new EngineEditor();
         }
 
-        private void edit_Load(object sender, EventArgs e)
+        private void AppFrm_Load(object sender, EventArgs e)
         {
+            dbProvide = new DBProvider();
             xmlReader = XMLReader.Instance;
-            string shapPath = xmlReader.Read("/configuration/testData/Point").Attributes["path"].Value;
-            string shpName = xmlReader.Read("/configuration/testData/Point").Attributes["name"].Value;
 
-            this.MapControl.AddShapeFile(shapPath, shpName);
+            MapControl.AddShapeFile(xmlReader.Read("/configuration/testData/Line").Attributes["path"].Value, "testLine");
+            //IFeatureClass featClass = dbProvide.workspace.OpenFeatureClass("Yunnan");
+            //ILayer lyr;
+            //IFeatureLayer featLyr = new FeatureLayerClass();
+            //featLyr.FeatureClass = featClass;
+            //lyr = featLyr as ILayer;
+            //lyr.Name = "云南";
+            //MapControl.AddLayer(lyr);
         }
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            curEngineEditor = new EngineEditorClass();
-            IMap curMap = MapControl.Map as IMap;
-            IFeatureLayer curlayer = MapControl.get_Layer(0) as IFeatureLayer;
+            IFeatureLayer curlayer = MapControl.get_Layer(2) as IFeatureLayer;
             IDataset curDataSet = curlayer.FeatureClass as IDataset;
             IWorkspace cws = curDataSet.Workspace;
-            curEngineEditor.EditSessionMode = esriEngineEditSessionMode.esriEngineEditSessionModeNonVersioned;
-            curEditTask = curEngineEditor as IEngineEditTask;
-            curEditTask = curEngineEditor.GetTaskByUniqueName("ControlToolsEditingCreateNewFeatureTask");
-            curEngineEditor.CurrentTask = curEditTask;
-            curEngineEditor.EnableUndoRedo(true);
-            curEngineEditor.StartEditing(cws, curMap);
+            editConxt.Editor.EditSessionMode = esriEngineEditSessionMode.esriEngineEditSessionModeNonVersioned;
+            editConxt.EditTask = editConxt.Editor as IEngineEditTask;
+            editConxt.EditTask = editConxt.Editor.GetTaskByUniqueName("ControlToolsEditingCreateNewFeatureTask");
+            editConxt.Editor.CurrentTask = editConxt.EditTask;
+            editConxt.Editor.EnableUndoRedo(true);
+            editConxt.Editor.StartEditing(cws, editConxt.Map);
             // 设置编辑图层
-            curEngineEditLayer = curEngineEditor as IEngineEditLayers;
-            curEngineEditLayer.SetTargetLayer(curlayer, 0);
+            editLayer = editConxt.Editor as IEngineEditLayers;
+            editLayer.SetTargetLayer(curlayer, 0);
             _editStart = true;
             EditProcessChange(1);
         }
@@ -92,8 +99,9 @@ namespace edit
         {
             if (_editStart)
             {
+                _editMove = false;
                 _editSelect = true;
-                curEditSelect = new EditSelect(true, curEngineEditor, curEngineEditLayer, curActiveView, curMap);
+                curEditSelect = new EditSelect(true, editConxt.Editor, editLayer, editConxt.ActiveView, editConxt.Map);
                 EditProcessChange(2);
             }
         }
@@ -149,10 +157,29 @@ namespace edit
             }
         }
 
-
+        private void SetMapInfo(double x, double y)
+        {
+            #region 获取鼠标坐标和地图尺寸单位
+            // 获取比例尺数据
+            string unit = "";
+            double scale = 0;
+            if (MapControl.Map != null)
+            {
+                scale = MapControl.Map.MapScale;
+                unit = MapControl.MapUnits.ToString().Substring(4);
+            }
+            string coordinate = string.Format(
+                "{0},{1}", x.ToString("#######.##"),
+                y.ToString("#######.##"));
+            // 设置比例尺和鼠标点坐标
+            tbCoord.Text = coordinate;
+            tbScale.Text = "1:" + scale.ToString("######.###");
+            #endregion
+        }
 
         private void MapControl_OnMouseMove(object sender, IMapControlEvents2_OnMouseMoveEvent e)
         {
+            SetMapInfo(e.mapX, e.mapY);
             if (_editMove)
             {
                 curEditMove.OnMouseMove(1, 0, e.x, e.y);
@@ -209,8 +236,42 @@ namespace edit
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-            _isTest = true;
+            IFeatureClass featClass = dbProvide.workspace.OpenFeatureClass("YunnanRiver");
+            IFields fields = featClass.Fields;
+            Frm frm = new Frm();
+            IQueryFilter pQueryFilter = new QueryFilterClass();
+            pQueryFilter.WhereClause = " name LIKE '%南%'";
+            IFeatureCursor pFeatureCursor = featClass.Search(pQueryFilter, false);
+            IFeature pFeatureIfExit = pFeatureCursor.NextFeature();
+            List<IFeature> featList = new List<IFeature>();
+            List<string> fieldList = new List<string>();
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("名称", typeof(string));
+            int index = featClass.FindField("name");
+
+            for (int i = 0; i < featClass.Fields.FieldCount; i++)
+            {
+                fieldList.Add(featClass.Fields.get_Field(i).Name);
+            }
+            while (pFeatureIfExit != null)
+            {
+                DataRow dr = dt.NewRow();
+                featList.Add(pFeatureIfExit);
+                dr["名称"] = pFeatureIfExit.get_Value(index);
+                dt.Rows.Add(dr);
+                pFeatureIfExit = pFeatureCursor.NextFeature();
+            }
+            frm.dgv.DataSource = dt;
+            frm.dgv.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            frm.dgv.CellDoubleClick += Dgv_CellDoubleClick;
+            frm.Show(this);
             EditProcessChange(4);
+        }
+
+        private void Dgv_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            
         }
 
         private void Test(int x, int y)
@@ -223,52 +284,54 @@ namespace edit
             _editSelect = true;
             _editMove = true;
             _editAdd = false;
-            curEditMove = new EditMove(curEngineEditor, curEngineEditLayer, curActiveView, curMap, curMoveGeoFeedback);
+            curEditMove = new EditMove(editConxt.Editor, editLayer, editConxt.ActiveView, editConxt.Map, curMoveGeoFeedback);
             EditProcessChange(3);
         }
 
         private void btnEnd_Click(object sender, EventArgs e)
         {
             
-            EditEnd cEditEnd = new EditEnd(curEngineEditor, curActiveView, curMap, true);
+            EditEnd cEditEnd = new EditEnd(editConxt.Editor, editConxt.ActiveView, editConxt.Map, true);
             cEditEnd.onClick();
             MessageBox.Show("保存成功");
         }
 
         private void MapControl_OnDoubleClick(object sender, IMapControlEvents2_OnDoubleClickEvent e)
         {
-            cEditAdd.CaptureDblClick();
+            if (_editMove)
+            {
+                cEditAdd.CaptureDblClick();
+            }
         }
 
         private void btnUndo_Click(object sender, EventArgs e)
         {
-            cEditUndo = new EditUndo(curEngineEditor, curActiveView);
+            cEditUndo = new EditUndo(editConxt.Editor, editConxt.ActiveView);
             cEditUndo.Execute();
            
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            cEditDelete = new EditDelelte(curEngineEditor, curEngineEditLayer, curActiveView);
+            cEditDelete = new EditDelelte(editConxt.Editor, editLayer, editConxt.ActiveView);
             cEditDelete.OnMouseDown(0, 0, 0, 0);
         }
 
         private void tsbStart_Click(object sender, EventArgs e)
         {
-            curEngineEditor = new EngineEditorClass();
-            IMap curMap = MapControl.Map as IMap;
+            IEngineEditor curEngineEditor = editConxt.Editor;
             IFeatureLayer curlayer = MapControl.get_Layer(0) as IFeatureLayer;
             IDataset curDataSet = curlayer.FeatureClass as IDataset;
             IWorkspace cws = curDataSet.Workspace;
             curEngineEditor.EditSessionMode = esriEngineEditSessionMode.esriEngineEditSessionModeNonVersioned;
-            curEditTask = curEngineEditor as IEngineEditTask;
+            IEngineEditTask curEditTask = curEngineEditor as IEngineEditTask;
             curEditTask = curEngineEditor.GetTaskByUniqueName("ControlToolsEditingCreateNewFeatureTask");
             curEngineEditor.CurrentTask = curEditTask;
             curEngineEditor.EnableUndoRedo(true);
-            curEngineEditor.StartEditing(cws, curMap);
+            curEngineEditor.StartEditing(cws, editConxt.Map);
             // 设置编辑图层
-            curEngineEditLayer = curEngineEditor as IEngineEditLayers;
-            curEngineEditLayer.SetTargetLayer(curlayer, 0);
+            editLayer = curEngineEditor as IEngineEditLayers;
+            editLayer.SetTargetLayer(curlayer, 0);
             _editStart = true;
             EditProcessChange(1);
             SetBtnAbility(true);
@@ -287,7 +350,7 @@ namespace edit
 
         private void tsbEnd_Click(object sender, EventArgs e)
         {
-            EditEnd cEditEnd = new EditEnd(curEngineEditor, curActiveView, curMap, true);
+            EditEnd cEditEnd = new EditEnd(editConxt.Editor, editConxt.ActiveView, editConxt.Map, true);
             cEditEnd.onClick();
             MessageBox.Show("保存成功");
             SetBtnAbility(false);
@@ -300,9 +363,17 @@ namespace edit
                 _editMove = false;
                 _editSelect = false;
                 _editAdd = true;
-                cEditAdd = new EditAdd(curEngineEditor, curEngineEditLayer, curActiveView, curActiveView.FocusMap);
+                cEditAdd = new EditAdd(editConxt.Editor, editLayer, editConxt.ActiveView, editConxt.ActiveView.FocusMap);
                 MessageBox.Show(cEditAdd.Name);
             }
+        }
+
+        private void btnIOC_Click(object sender, EventArgs e)
+        {
+            ioc.Register<IXMLReader, XMLReader>();
+            //EditSelect select = ioc.Resolve<EditSelect>();
+            XMLReader xmlread = ioc.Resolve<XMLReader>();
+
         }
     }
 }

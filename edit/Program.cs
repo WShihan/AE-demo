@@ -16,7 +16,7 @@ namespace edit
             ESRI.ArcGIS.RuntimeManager.Bind(ESRI.ArcGIS.ProductCode.EngineOrDesktop);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new edit());
+            Application.Run(new AppFrm());
         }
     }
 }
