@@ -1,0 +1,6 @@
+.gitignore
+*.dll
+*.pdb
+*.xml
+*.exe
+*/obj

@@ -23,7 +23,7 @@ namespace BasicService.GIS
         {
             //打开gdb
             IWorkspaceFactory workSpaceFactory = new FileGDBWorkspaceFactory();
-            string gdb = _xmlReader.Read("configuration/testData/gdb").InnerText;
+            string gdb = _xmlReader.Read("config/data/gdb").InnerText;
             IWorkspace workSpace = workSpaceFactory.OpenFromFile(gdb, 0);
             featWorkSpace = workSpace as IFeatureWorkspace;
         }

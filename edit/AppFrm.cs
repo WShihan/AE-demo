@@ -67,7 +67,7 @@ namespace edit
         {
             dbProvide = new DBProvider();
             xmlReader = XMLReader.Instance;
-            string mxdPath = xmlReader.Read("/configuration/testData/mxd").InnerText;
+            string mxdPath = xmlReader.Read("/config/data/mxd").InnerText;
             //MapControl.LoadMxFile(mxdPath);
 
             //MapControl.AddShapeFile(xmlReader.Read("/configuration/testData/path").InnerText, "testLine");
@@ -239,46 +239,41 @@ namespace edit
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-            List<TestMan> lst = new List<TestMan>();
-            lst.Add(new TestMan("bruce", 10, "USA", "dkfjd"));
-            lst.Add(new TestMan("bruce", 10, "USA", "dkfjd"));
-            lst.Add(new TestMan("bruce", 10, "USA", "dkfjd"));
-            lst.Add(new TestMan("bruce", 10, "USA", "dkfjd"));
-
-
-            //IFeatureClass featClass = dbProvide.workspace.OpenFeatureClass("YunnanRiver");
-            //IFields fields = featClass.Fields;
+            IFeatureClass featClass = dbProvide.workspace.OpenFeatureClass("YunnanRiver");
+            IFields fields = featClass.Fields;
             Frm frm = new Frm();
-            //IQueryFilter pQueryFilter = new QueryFilterClass();
-            //pQueryFilter.WhereClause = " name LIKE '%南%'";
-            //IFeatureCursor pFeatureCursor = featClass.Search(pQueryFilter, false);
-            //IFeature pFeatureIfExit = pFeatureCursor.NextFeature();
-            //List<IFeature> featList = new List<IFeature>();
-            //List<string> fieldList = new List<string>();
+            IQueryFilter pQueryFilter = new QueryFilterClass();
+            pQueryFilter.WhereClause = " name LIKE '%南%'";
+            pQueryFilter.SubFields= "name";
+            IFeatureCursor pFeatureCursor = featClass.Search(pQueryFilter, true);
+            IFeature pFeatureIfExit = pFeatureCursor.NextFeature();
+            List<IFeature> featList = new List<IFeature>();
+            List<string> fieldList = new List<string>();
 
-            //DataTable dt = new DataTable();
-            //dt.Columns.Add("名称", typeof(string));
-            //int index = featClass.FindField("name");
+            DataTable dt = new DataTable();
+            dt.Columns.Add("名称", typeof(string));
+            IFields feilds =  featClass.Fields;
+            int index = featClass.FindField("name");
 
-            //for (int i = 0; i < featClass.Fields.FieldCount; i++)
-            //{
-            //    fieldList.Add(featClass.Fields.get_Field(i).Name);
-            //}
-            //while (pFeatureIfExit != null)
-            //{
-            //    DataRow dr = dt.NewRow();
-            //    featList.Add(pFeatureIfExit);
-            //    dr["名称"] = pFeatureIfExit.get_Value(index);
-            //    dt.Rows.Add(dr);
-            //    pFeatureIfExit = pFeatureCursor.NextFeature();
-            //}
-            //frm.dgv.DataSource = dt;
-            //frm.dgv.AutoGenerateColumns = false;
-            frm.dgv.DataSource = lst;
+            for (int i = 0; i < featClass.Fields.FieldCount; i++)
+            {
+                fieldList.Add(featClass.Fields.get_Field(i).Name);
+                Console.WriteLine($"name:{ featClass.Fields.Field[i].AliasName}");
+            }
+            while (pFeatureIfExit != null)
+            {
+                DataRow dr = dt.NewRow();
+                featList.Add(pFeatureIfExit);
+                dr["名称"] = pFeatureIfExit.get_Value(index);
+                dt.Rows.Add(dr);
+                pFeatureIfExit = pFeatureCursor.NextFeature();
+            }
+            frm.dgv.DataSource = dt;
+            frm.dgv.AutoGenerateColumns = false;
             frm.dgv.AutoSize = true;
             frm.dgv.CellDoubleClick += Dgv_CellDoubleClick;
             frm.Show(this);
-            //EditProcessChange(4);
+            EditProcessChange(4);
         }
 
         private void Dgv_CellDoubleClick(object sender, DataGridViewCellEventArgs e)

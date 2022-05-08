@@ -137,6 +137,12 @@
     <Compile Include="UI\Frm.Designer.cs">
       <DependentUpon>Frm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\FrmQueryField.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FrmQueryField.Designer.cs">
+      <DependentUpon>FrmQueryField.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AppFrm.resx">
       <DependentUpon>AppFrm.cs</DependentUpon>
     </EmbeddedResource>

@@ -1,11 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<configuration>
-	<testData>
-		<gdb>C:\Users\Administrator\Desktop\AE-demo\asset\data\db.gdb</gdb>
+<config>
+	<data>
+	    <!-- old gdb<gdb>C:\Users\acer\source\repos\GISDemo\asset\data\db.gdb</gdb>-->
+		<gdb>C:\Users\acer\source\repos\GISDemo\asset\data\db.gdb</gdb>
+		<!-- old mxd<mxd name="地图文档">C:\Users\acer\source\repos\GISDemo\asset\data\yunnan.mxd</mxd> -->
 		<mxd name="地图文档">C:\Users\acer\source\repos\GISDemo\asset\data\yunnan.mxd</mxd>
+		<!-- old path <path name="测试数据路径">C:\Users\Administrator\Desktop\TempData\shp</path> -->
 		<path name="测试数据路径">C:\Users\Administrator\Desktop\TempData\shp</path>
 		<Line  name="点">testLine</Line>
 		<Point  name="线">testPoint</Point>
 		<Polygon  name="面">testPolygon</Polygon>
-	</testData>
-</configuration>
+	</data>
+</config>
