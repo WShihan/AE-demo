@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace edit.UI
+namespace app.UI
 {
     public partial class FrmQueryField : Form
     {

@@ -3,7 +3,7 @@ using ESRI.ArcGIS.Controls;
 using System;
 using System.Collections.Generic;
 using framework.Implementation;
-using BasicService.GIS;
+using BasicService.db;
 using ESRI.ArcGIS.Geodatabase;
 using BasicService.configratior;
 using System.Windows.Forms;
@@ -12,10 +12,10 @@ using ESRI.ArcGIS.Display;
 using framework.Interface;
 using Process.edit;
 using System.Data;
-using edit.UI;
-using edit.Test;
+using app.UI;
+using app.Test;
 
-namespace edit
+namespace app
 {
     public partial class AppFrm : Form
 
@@ -68,7 +68,7 @@ namespace edit
             dbProvide = new DBProvider();
             xmlReader = XMLReader.Instance;
             string mxdPath = xmlReader.Read("/config/data/mxd").InnerText;
-            //MapControl.LoadMxFile(mxdPath);
+            MapControl.LoadMxFile(mxdPath);
 
             //MapControl.AddShapeFile(xmlReader.Read("/configuration/testData/path").InnerText, "testLine");
             //IFeatureClass featClass = dbProvide.workspace.OpenFeatureClass("Yunnan");

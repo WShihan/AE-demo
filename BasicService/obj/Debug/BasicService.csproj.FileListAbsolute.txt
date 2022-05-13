@@ -90,3 +90,6 @@ C:\Users\Administrator\Desktop\AE-demo\BasicService\obj\Debug\BasicService.cspro
 C:\Users\Administrator\Desktop\AE-demo\BasicService\obj\Debug\BasicService.csproj.CopyComplete
 C:\Users\Administrator\Desktop\AE-demo\BasicService\obj\Debug\BasicService.dll
 C:\Users\Administrator\Desktop\AE-demo\BasicService\obj\Debug\BasicService.pdb
+C:\Users\Administrator\Desktop\AE-demo\BasicService\bin\Debug\System.Data.SQLite.dll
+C:\Users\Administrator\Desktop\AE-demo\BasicService\bin\Debug\System.Data.SQLite.pdb
+C:\Users\Administrator\Desktop\AE-demo\BasicService\bin\Debug\System.Data.SQLite.dll.config

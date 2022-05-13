@@ -1,5 +1,5 @@
 ﻿
-namespace edit
+namespace app
 {
     partial class AppFrm
     {
@@ -163,7 +163,7 @@ namespace edit
             // 
             // tsbStart
             // 
-            this.tsbStart.Image = global::edit.Properties.Resources.StartEditing;
+            this.tsbStart.Image = global::app.Properties.Resources.StartEditing;
             this.tsbStart.Name = "tsbStart";
             this.tsbStart.Size = new System.Drawing.Size(148, 26);
             this.tsbStart.Text = "开始编辑";
@@ -172,7 +172,7 @@ namespace edit
             // tsbSave
             // 
             this.tsbSave.Enabled = false;
-            this.tsbSave.Image = global::edit.Properties.Resources.SaveEdits;
+            this.tsbSave.Image = global::app.Properties.Resources.SaveEdits;
             this.tsbSave.Name = "tsbSave";
             this.tsbSave.Size = new System.Drawing.Size(148, 26);
             this.tsbSave.Text = "保存编辑";
@@ -180,7 +180,7 @@ namespace edit
             // tsbEnd
             // 
             this.tsbEnd.Enabled = false;
-            this.tsbEnd.Image = global::edit.Properties.Resources.StopEditing;
+            this.tsbEnd.Image = global::app.Properties.Resources.StopEditing;
             this.tsbEnd.Name = "tsbEnd";
             this.tsbEnd.Size = new System.Drawing.Size(148, 26);
             this.tsbEnd.Text = "结束编辑";

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace edit.Properties {
+namespace app.Properties {
     using System;
     
     

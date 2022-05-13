@@ -780,6 +780,11 @@ public static IGeometry ModifyGeomtryZMValue(IObjectClass featureClass, IGeometr
 
 
 
+```mermaid
+classDiagram
+app <-- b
+```
+
 
 
 

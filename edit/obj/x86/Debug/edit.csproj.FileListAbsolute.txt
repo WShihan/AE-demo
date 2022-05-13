@@ -186,3 +186,4 @@ C:\Users\Administrator\Desktop\AE-demo\edit\bin\x86\Debug\ESRI.ArcGIS.DataSource
 C:\Users\Administrator\Desktop\AE-demo\edit\bin\x86\Debug\ESRI.ArcGIS.GeoDatabaseExtensions.xml
 C:\Users\Administrator\Desktop\AE-demo\edit\obj\x86\Debug\edit.AppFrm.resources
 C:\Users\Administrator\Desktop\AE-demo\edit\obj\x86\Debug\edit.UI.Frm.resources
+C:\Users\Administrator\Desktop\AE-demo\edit\obj\x86\Debug\edit.UI.FrmQueryField.resources

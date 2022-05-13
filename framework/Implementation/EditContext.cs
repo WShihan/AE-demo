@@ -15,7 +15,7 @@ namespace framework.Implementation
         IActiveView _activeView;
         IMap _map;
         private static EditContext editContextIns;
-        public EditContext()
+        private EditContext()
         {
 
         }

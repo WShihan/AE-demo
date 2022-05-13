@@ -1,5 +1,5 @@
 ﻿
-namespace edit.UI
+namespace app.UI
 {
     partial class Frm
     {
