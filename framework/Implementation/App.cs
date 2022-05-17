@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using framework.Interface;
+
 namespace framework.Implementation
 {
     public class App : IApp
     {
-        private EditContext _editContext;
+        private GISContext _Giscontext;
         public App() 
         {
-            _editContext = EditContext.Instance;
+            _Giscontext = Implementation.GISContext.Instance;
         }
-        public IEditContext EditContextIns
+        public IGISContext GISContext
         {
-            get { return _editContext; }
+            get { return _Giscontext; }
         }
 
     }

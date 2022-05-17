@@ -5,11 +5,10 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml;
-using framework.Interface;
 
-namespace BasicService.configratior
+namespace BasicService.Config
 {
-    public class XMLReader:IXMLReader
+    public class XMLReader
     {
         private XmlDocument xmlDoc;
         private static XMLReader _xmlReader;

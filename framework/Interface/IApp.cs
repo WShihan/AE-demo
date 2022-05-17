@@ -7,7 +7,7 @@ namespace framework.Interface
 {
     public interface IApp
     {
-        IEditContext EditContextIns
+        IGISContext GISContext
         {
             get;
         }

@@ -1,19 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <config>
 	<data>
+	    <!--
 		<gdb>C:\Users\Administrator\Desktop\AE-demo\edit\bin\x86\Debug\asset\data\db.gdb</gdb>
 		<mxd name="地图文档">C:\Users\Administrator\Desktop\AE-demo\edit\bin\x86\Debug\asset\data\yunnan.mxd</mxd> 
 		<path name="测试数据路径">./assets/data</path>
-		<Line  name="点">testLine</Line>
-		<Point  name="线">testPoint</Point>
-		<Polygon  name="面">testPolygon</Polygon>
-		<!-- 
-		<gdb>C:\Users\Administrator\Desktop\AE-demo\edit\bin\x86\Debug\asset\data\db.gdb</gdb>
-		<mxd name="地图文档">C:\Users\Administrator\Desktop\AE-demo\edit\bin\x86\Debug\asset\data\yunnan.mxd</mxd> 
-		<path name="测试数据路径">./assets/data</path>
-		<Line  name="点">testLine</Line>
-		<Point  name="线">testPoint</Point>
-		<Polygon  name="面">testPolygon</Polygon>
 		-->
+		<Line  name="点">testLine</Line>
+		<Point  name="线">testPoint</Point>
+		<Polygon  name="面">testPolygon</Polygon>
+		 
+		<gdb>C:\Users\acer\source\repos\GISDemo\asset\data\db.gdb</gdb>
+		<mxd name="地图文档">C:\Users\acer\source\repos\GISDemo\asset\data\yunnan.mxd</mxd> 
+		<path name="测试数据路径">C:\Users\acer\source\repos\GISDemo\asset\data</path>
+		
 	</data>
 </config>

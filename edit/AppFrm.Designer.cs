@@ -89,7 +89,6 @@ namespace app
             this.MapControl.TabIndex = 1;
             this.MapControl.OnMouseDown += new ESRI.ArcGIS.Controls.IMapControlEvents2_Ax_OnMouseDownEventHandler(this.MapControl_OnMouseDown);
             this.MapControl.OnMouseUp += new ESRI.ArcGIS.Controls.IMapControlEvents2_Ax_OnMouseUpEventHandler(this.MapControl_OnMouseUp);
-            this.MapControl.OnMouseMove += new ESRI.ArcGIS.Controls.IMapControlEvents2_Ax_OnMouseMoveEventHandler(this.MapControl_OnMouseMove);
             this.MapControl.OnDoubleClick += new ESRI.ArcGIS.Controls.IMapControlEvents2_Ax_OnDoubleClickEventHandler(this.MapControl_OnDoubleClick);
             // 
             // axLicenseControl1
@@ -165,7 +164,7 @@ namespace app
             // 
             this.tsbStart.Image = global::app.Properties.Resources.StartEditing;
             this.tsbStart.Name = "tsbStart";
-            this.tsbStart.Size = new System.Drawing.Size(148, 26);
+            this.tsbStart.Size = new System.Drawing.Size(224, 26);
             this.tsbStart.Text = "开始编辑";
             this.tsbStart.Click += new System.EventHandler(this.tsbStart_Click);
             // 
@@ -174,7 +173,7 @@ namespace app
             this.tsbSave.Enabled = false;
             this.tsbSave.Image = global::app.Properties.Resources.SaveEdits;
             this.tsbSave.Name = "tsbSave";
-            this.tsbSave.Size = new System.Drawing.Size(148, 26);
+            this.tsbSave.Size = new System.Drawing.Size(224, 26);
             this.tsbSave.Text = "保存编辑";
             // 
             // tsbEnd
@@ -182,7 +181,7 @@ namespace app
             this.tsbEnd.Enabled = false;
             this.tsbEnd.Image = global::app.Properties.Resources.StopEditing;
             this.tsbEnd.Name = "tsbEnd";
-            this.tsbEnd.Size = new System.Drawing.Size(148, 26);
+            this.tsbEnd.Size = new System.Drawing.Size(224, 26);
             this.tsbEnd.Text = "结束编辑";
             this.tsbEnd.Click += new System.EventHandler(this.tsbEnd_Click);
             // 
@@ -270,14 +269,14 @@ namespace app
             // btnTest
             // 
             this.btnTest.Name = "btnTest";
-            this.btnTest.Size = new System.Drawing.Size(224, 26);
+            this.btnTest.Size = new System.Drawing.Size(148, 26);
             this.btnTest.Text = "查询要素";
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
             // btnIOC
             // 
             this.btnIOC.Name = "btnIOC";
-            this.btnIOC.Size = new System.Drawing.Size(224, 26);
+            this.btnIOC.Size = new System.Drawing.Size(148, 26);
             this.btnIOC.Text = "IOC测试";
             this.btnIOC.Click += new System.EventHandler(this.btnIOC_Click);
             // 
@@ -305,21 +304,21 @@ namespace app
             // 
             // tbCoord
             // 
-            this.tbCoord.Font = new System.Drawing.Font("宋体", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tbCoord.Font = new System.Drawing.Font("宋体", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tbCoord.Location = new System.Drawing.Point(94, 9);
             this.tbCoord.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbCoord.Name = "tbCoord";
-            this.tbCoord.Size = new System.Drawing.Size(115, 20);
+            this.tbCoord.Size = new System.Drawing.Size(115, 22);
             this.tbCoord.TabIndex = 4;
             this.tbCoord.Text = "110.554,36.22";
             // 
             // tbScale
             // 
-            this.tbScale.Font = new System.Drawing.Font("宋体", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tbScale.Font = new System.Drawing.Font("宋体", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tbScale.Location = new System.Drawing.Point(9, 8);
             this.tbScale.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbScale.Name = "tbScale";
-            this.tbScale.Size = new System.Drawing.Size(77, 20);
+            this.tbScale.Size = new System.Drawing.Size(77, 22);
             this.tbScale.TabIndex = 3;
             this.tbScale.Text = "1:100";
             // 

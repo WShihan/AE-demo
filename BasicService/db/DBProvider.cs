@@ -5,8 +5,10 @@ using System.Data.SQLite;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BasicService.configratior;
-namespace BasicService.db
+using BasicService.Config;
+using System;
+
+namespace framework.db
 {
     public class DBProvider
     {
@@ -29,15 +31,17 @@ namespace BasicService.db
         }
         private void ConnectDB()
         {
-            string startPath = Application.StartupPath;
-            // sqlite connection
-            sqliteConn = new SQLiteConnection(startPath + @"/asset/data/db.db");
-            SQLiteDataAdapter sqliteAdpt = new SQLiteDataAdapter("select * from test", sqliteConn);
-            //打开gdb
-            IWorkspaceFactory workSpaceFactory = new FileGDBWorkspaceFactory();
-            string gdb = _xmlReader.Read("config/data/gdb").InnerText;
-            IWorkspace workSpace = workSpaceFactory.OpenFromFile(gdb, 0);
-            featWorkSpace = workSpace as IFeatureWorkspace;
+            //string startPath = Application.StartupPath;
+            //// sqlite connection
+            ////sqliteConn = new SQLiteConnection(startPath + @"/asset/data/db.db");
+            ////SQLiteDataAdapter sqliteAdpt = new SQLiteDataAdapter("select * from test", sqliteConn);
+            ////打开gdb
+            //string gdb = _xmlReader.Read("config/data/gdb").InnerText;
+            //System.Type t = Type.GetTypeFromProgID("esriDataSourcesGDB.FileGDBWorkspaceFactory");
+            //System.Object obj = Activator.CreateInstance(t);
+            //IWorkspaceFactory workspaceFactory = obj as IWorkspaceFactory;
+            //IWorkspace workspace = workspaceFactory.OpenFromFile(gdb, 0);
+            //featWorkSpace = workspace as IFeatureWorkspace;
         }
     }
 }

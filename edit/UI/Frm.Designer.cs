@@ -31,56 +31,83 @@ namespace app.UI
         {
             this.dgv = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.tbSearch = new System.Windows.Forms.TextBox();
+            this.gbDgv = new System.Windows.Forms.GroupBox();
+            this.gbInfo = new System.Windows.Forms.GroupBox();
+            this.cbbLayer = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.panel1.SuspendLayout();
+            this.gbDgv.SuspendLayout();
+            this.gbInfo.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgv
             // 
             this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgv.Location = new System.Drawing.Point(0, 0);
-            this.dgv.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dgv.Location = new System.Drawing.Point(3, 21);
+            this.dgv.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dgv.Name = "dgv";
             this.dgv.RowHeadersWidth = 51;
             this.dgv.RowTemplate.Height = 27;
-            this.dgv.Size = new System.Drawing.Size(215, 365);
+            this.dgv.Size = new System.Drawing.Size(497, 284);
             this.dgv.TabIndex = 0;
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.tbSearch);
+            this.panel1.Controls.Add(this.gbInfo);
+            this.panel1.Controls.Add(this.gbDgv);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(215, 365);
+            this.panel1.Size = new System.Drawing.Size(509, 440);
             this.panel1.TabIndex = 1;
             // 
-            // tbSearch
+            // gbDgv
             // 
-            this.tbSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.gbDgv.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbSearch.Location = new System.Drawing.Point(9, 10);
-            this.tbSearch.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.tbSearch.Name = "tbSearch";
-            this.tbSearch.Size = new System.Drawing.Size(198, 21);
-            this.tbSearch.TabIndex = 0;
+            this.gbDgv.Controls.Add(this.dgv);
+            this.gbDgv.Location = new System.Drawing.Point(3, 129);
+            this.gbDgv.Name = "gbDgv";
+            this.gbDgv.Size = new System.Drawing.Size(503, 308);
+            this.gbDgv.TabIndex = 1;
+            this.gbDgv.TabStop = false;
+            // 
+            // gbInfo
+            // 
+            this.gbInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbInfo.Controls.Add(this.cbbLayer);
+            this.gbInfo.Location = new System.Drawing.Point(3, 3);
+            this.gbInfo.Name = "gbInfo";
+            this.gbInfo.Size = new System.Drawing.Size(503, 133);
+            this.gbInfo.TabIndex = 2;
+            this.gbInfo.TabStop = false;
+            // 
+            // cbbLayer
+            // 
+            this.cbbLayer.Dock = System.Windows.Forms.DockStyle.Top;
+            this.cbbLayer.FormattingEnabled = true;
+            this.cbbLayer.Location = new System.Drawing.Point(3, 21);
+            this.cbbLayer.Name = "cbbLayer";
+            this.cbbLayer.Size = new System.Drawing.Size(497, 23);
+            this.cbbLayer.TabIndex = 0;
             // 
             // Frm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(215, 365);
-            this.Controls.Add(this.dgv);
+            this.ClientSize = new System.Drawing.Size(509, 440);
             this.Controls.Add(this.panel1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Frm";
             this.Text = "Frm";
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.gbDgv.ResumeLayout(false);
+            this.gbInfo.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -89,6 +116,8 @@ namespace app.UI
 
         public System.Windows.Forms.DataGridView dgv;
         public System.Windows.Forms.Panel panel1;
-        public System.Windows.Forms.TextBox tbSearch;
+        private System.Windows.Forms.GroupBox gbInfo;
+        private System.Windows.Forms.GroupBox gbDgv;
+        private System.Windows.Forms.ComboBox cbbLayer;
     }
 }
