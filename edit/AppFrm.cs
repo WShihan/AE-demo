@@ -14,6 +14,9 @@ using System.Data;
 using app.UI;
 using app.Test;
 using framework.db;
+using GISService.Interface;
+using GISService;
+using GISService.edit;
 
 namespace app
 {
@@ -56,7 +59,8 @@ namespace app
         {
             InitializeComponent();
             app = new App();
-            gisContext = app.GISContext;
+            gisContext = app.GISCore.GisContext;
+            app.GISCore.MapControl = MapControl;
             gisContext.Map = MapControl.Map;
             gisContext.ActiveView = MapControl.ActiveView;
             gisContext.Map = MapControl.Map;
@@ -249,37 +253,8 @@ namespace app
         {
             try
             {
-                IFeatureClass featClass = GISContext.Instance.WorkSpace.GetFeatClassByName("YunnanRiver");
-                IFields fields = featClass.Fields;
-                Frm frm = new Frm();
-                IQueryFilter pQueryFilter = new QueryFilterClass();
-                pQueryFilter.WhereClause = " name LIKE '%南%'";
-                pQueryFilter.SubFields = "name";
-                IFeatureCursor pFeatureCursor = featClass.Search(pQueryFilter, true);
-                IFeature pFeatureIfExit = pFeatureCursor.NextFeature();
-                List<IFeature> featList = new List<IFeature>();
-                List<string> fieldList = new List<string>();
-
-                DataTable dt = new DataTable();
-                dt.Columns.Add("名称", typeof(string));
-                IFields feilds = featClass.Fields;
-                int index = featClass.FindField("name");
-
-                while (pFeatureIfExit != null)
-                {
-                    DataRow dr = dt.NewRow();
-                    featList.Add(pFeatureIfExit);
-                    dr["名称"] = pFeatureIfExit.get_Value(index);
-                    dt.Rows.Add(dr);
-                    pFeatureIfExit = pFeatureCursor.NextFeature();
-                }
-                frm.dgv.DataSource = dt;
-                frm.dgv.AutoGenerateColumns = false;
-                frm.dgv.AutoSize = true;
-                frm.dgv.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                frm.dgv.CellDoubleClick += Dgv_CellDoubleClick;
+                Frm frm = new Frm(app);
                 frm.Show(this);
-                EditProcessChange(4);
             }
             catch(Exception ex)
             {
@@ -287,10 +262,6 @@ namespace app
             }
         }
 
-        private void Dgv_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            
-        }
 
         private void Test(int x, int y)
         {

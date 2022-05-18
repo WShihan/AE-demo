@@ -43,19 +43,20 @@
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Display, Version=10.2.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Geodatabase, Version=10.2.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Geometry, Version=10.2.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="ESRI.ArcGIS.System, Version=10.2.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -64,11 +65,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArcWorkSpace.cs" />
+    <Compile Include="edit\EditAdd.cs" />
+    <Compile Include="edit\EditDelelte.cs" />
+    <Compile Include="edit\EditEnd.cs" />
+    <Compile Include="edit\EditMove.cs" />
+    <Compile Include="edit\EditMoveVex.cs" />
+    <Compile Include="edit\EditSelect.cs" />
+    <Compile Include="edit\EditUndo.cs" />
     <Compile Include="GisCore.cs" />
     <Compile Include="GISContext.cs" />
     <Compile Include="Interface\IEditContext.cs" />
     <Compile Include="Interface\IEditeTool.cs" />
     <Compile Include="Interface\IGISContext.cs" />
+    <Compile Include="MapManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

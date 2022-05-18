@@ -60,12 +60,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Implementation\App.cs" />
-    <Compile Include="Implementation\GISContext.cs" />
     <Compile Include="Implementation\IOContainer.cs" />
     <Compile Include="Interface\IApp.cs" />
-    <Compile Include="Interface\IGISContext.cs" />
-    <Compile Include="Interface\IEditContext.cs" />
-    <Compile Include="Interface\IEditeTool.cs" />
     <Compile Include="Interface\IIOContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -73,6 +69,10 @@
     <ProjectReference Include="..\BasicService\BasicService.csproj">
       <Project>{1d5ee91f-7d6a-4411-8f23-00ed59603714}</Project>
       <Name>BasicService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GISCore\GISService.csproj">
+      <Project>{f807ce9e-4659-453d-8708-448f40d745bb}</Project>
+      <Name>GISService</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

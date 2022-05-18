@@ -75,6 +75,10 @@
       <Project>{e099384f-0f46-42ab-9ef9-0b2bb5932a94}</Project>
       <Name>framework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GISCore\GISService.csproj">
+      <Project>{f807ce9e-4659-453d-8708-448f40d745bb}</Project>
+      <Name>GISService</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -4,14 +4,14 @@ using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using System;
 using framework;
-using Process.MapOperation;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ESRI.ArcGIS.Display;
 using GISService.Interface;
+using GISService;
 
-namespace Process.edit
+namespace GISService.edit
 {
     public class EditAdd: IEditeTool
     {

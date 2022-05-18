@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using GISService;
 namespace framework.Interface
 {
     public interface IApp
     {
-        IGISContext GISContext
+         GisCore GISCore
         {
             get;
         }

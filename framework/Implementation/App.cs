@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using framework.Interface;
-
+using GISService;
 namespace framework.Implementation
 {
     public class App : IApp
     {
-        private GISContext _Giscontext;
+        private GisCore _gisCore;
         public App() 
         {
-            _Giscontext = Implementation.GISContext.Instance;
+            _gisCore = new GisCore();
         }
-        public IGISContext GISContext
+        public GisCore GISCore
         {
-            get { return _Giscontext; }
+            get { return _gisCore; }
         }
 
     }
