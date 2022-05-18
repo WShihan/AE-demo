@@ -2,6 +2,7 @@
 <config>
 	<data>
 		<gdb>C:\Users\Administrator\Desktop\AE-demo\asset\data\db.gdb</gdb>
+		<sqlite name="SQLite数据库">C:\Users\Administrator\Desktop\AE-demo\asset\data\db.db</sqlite>
 		<mxd name="地图文档">C:\Users\Administrator\Desktop\AE-demo\asset\data\yunnan.mxd</mxd> 
 		<path name="测试数据路径">./assets/data</path>
 		<Line  name="点">testLine</Line>

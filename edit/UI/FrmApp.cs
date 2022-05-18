@@ -11,16 +11,15 @@ using ESRI.ArcGIS.Display;
 using framework.Interface;
 using Process.edit;
 using System.Data;
-using app.UI;
 using app.Test;
 using framework.db;
 using GISService.Interface;
 using GISService;
 using GISService.edit;
 
-namespace app
+namespace app.UI
 {
-    public partial class AppFrm : Form
+    public partial class FrmApp : Form
 
     {
         private XMLReader xmlReader;
@@ -55,7 +54,7 @@ namespace app
         private IPoint fromPoint;
         private IPoint toPoint;
 
-        public AppFrm()
+        public FrmApp()
         {
             InitializeComponent();
             app = new App();
@@ -253,7 +252,7 @@ namespace app
         {
             try
             {
-                Frm frm = new Frm(app);
+                FrmQueryField frm = new FrmQueryField(app);
                 frm.Show(this);
             }
             catch(Exception ex)

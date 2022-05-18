@@ -31,10 +31,10 @@ namespace framework.db
         }
         private void ConnectDB()
         {
-            //string startPath = Application.StartupPath;
-            //// sqlite connection
-            ////sqliteConn = new SQLiteConnection(startPath + @"/asset/data/db.db");
-            ////SQLiteDataAdapter sqliteAdpt = new SQLiteDataAdapter("select * from test", sqliteConn);
+            string startPath = Application.StartupPath;
+            // sqlite connection
+            sqliteConn = new SQLiteConnection(@"C:\Users\Administrator\Desktop\AE-demo\asset\data\db.db");
+            SQLiteDataAdapter sqliteAdpt = new SQLiteDataAdapter("select * from test", sqliteConn);
             ////打开gdb
             //string gdb = _xmlReader.Read("config/data/gdb").InnerText;
             //System.Type t = Type.GetTypeFromProgID("esriDataSourcesGDB.FileGDBWorkspaceFactory");

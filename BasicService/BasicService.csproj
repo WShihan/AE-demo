@@ -69,7 +69,6 @@
     <Compile Include="Config\IXMLReader.cs" />
     <Compile Include="Config\XMLReader.cs" />
     <Compile Include="db\DBProvider.cs" />
-    <Compile Include="GIS\ArcWorkSpace.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

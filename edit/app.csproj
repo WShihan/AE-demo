@@ -122,29 +122,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppFrm.cs">
+    <Compile Include="UI\FrmApp.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AppFrm.Designer.cs">
-      <DependentUpon>AppFrm.cs</DependentUpon>
+    <Compile Include="UI\FrmApp.Designer.cs">
+      <DependentUpon>FrmApp.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test.cs" />
-    <Compile Include="UI\Frm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Frm.Designer.cs">
-      <DependentUpon>Frm.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI\FrmQueryField.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\FrmQueryField.Designer.cs">
       <DependentUpon>FrmQueryField.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="AppFrm.resx">
-      <DependentUpon>AppFrm.cs</DependentUpon>
+    <EmbeddedResource Include="UI\FrmApp.resx">
+      <DependentUpon>FrmApp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -156,9 +150,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="UI\Frm.resx">
-      <DependentUpon>Frm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UI\FrmQueryField.resx">
       <DependentUpon>FrmQueryField.cs</DependentUpon>
     </EmbeddedResource>

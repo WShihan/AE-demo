@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using app.UI;
-namespace app
+
+namespace Test
 {
     static class Program
     {
@@ -13,10 +13,9 @@ namespace app
         [STAThread]
         static void Main()
         {
-            ESRI.ArcGIS.RuntimeManager.Bind(ESRI.ArcGIS.ProductCode.EngineOrDesktop);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmApp());
+            Application.Run(new FrmTest());
         }
     }
 }

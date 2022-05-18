@@ -77,3 +77,4 @@ C:\Users\Administrator\Desktop\AE-demo\BasicService\bin\x86\Debug\ESRI.ArcGIS.Ge
 C:\Users\Administrator\Desktop\AE-demo\BasicService\bin\x86\Debug\ESRI.ArcGIS.DataSourcesGDB.xml
 C:\Users\Administrator\Desktop\AE-demo\BasicService\bin\x86\Debug\System.Data.SQLite.pdb
 C:\Users\Administrator\Desktop\AE-demo\BasicService\bin\x86\Debug\ESRI.ArcGIS.Geometry.xml
+C:\Users\Administrator\Desktop\AE-demo\BasicService\obj\Debug\BasicService.csproj.AssemblyReference.cache
