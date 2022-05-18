@@ -60,3 +60,11 @@ C:\Users\acer\source\repos\GISDemo\framework\obj\Debug\framework.csproj.CoreComp
 C:\Users\acer\source\repos\GISDemo\framework\obj\Debug\framework.csproj.CopyComplete
 C:\Users\acer\source\repos\GISDemo\framework\obj\Debug\framework.dll
 C:\Users\acer\source\repos\GISDemo\framework\obj\Debug\framework.pdb
+C:\Users\Administrator\Desktop\AE-demo\edit\bin\x86\Debug\framework.dll
+C:\Users\Administrator\Desktop\AE-demo\edit\bin\x86\Debug\framework.pdb
+C:\Users\Administrator\Desktop\AE-demo\framework\bin\x86\Debug\framework.dll
+C:\Users\Administrator\Desktop\AE-demo\framework\bin\x86\Debug\framework.pdb
+C:\Users\Administrator\Desktop\AE-demo\framework\bin\x86\Debug\BasicService.dll
+C:\Users\Administrator\Desktop\AE-demo\framework\bin\x86\Debug\System.Data.SQLite.dll
+C:\Users\Administrator\Desktop\AE-demo\framework\bin\x86\Debug\BasicService.pdb
+C:\Users\Administrator\Desktop\AE-demo\framework\bin\x86\Debug\System.Data.SQLite.pdb
